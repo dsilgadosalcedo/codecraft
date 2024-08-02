@@ -22,7 +22,7 @@ body {
   </style>
 </head>
 <body>
-	<h1>🥑 Hello </h1> 
+	<h1>🥑 Hello</h1> 
 </body>
 </html>
 `
@@ -72,9 +72,13 @@ function App() {
 		}
 
 		const htmlEditor = monaco.editor.create(document.getElementById("html"), {
+			automaticLayout: true,
 			value: html,
 			language: "html",
 			theme: "vs-dark",
+			minimap: {
+				enabled: false,
+			},
 		})
 
 		htmlEditor.onDidChangeModelContent(() => {
@@ -82,9 +86,13 @@ function App() {
 		})
 
 		const cssEditor = monaco.editor.create(document.getElementById("css"), {
+			automaticLayout: true,
 			value: css,
 			language: "css",
 			theme: "vs-dark",
+			minimap: {
+				enabled: false,
+			},
 		})
 
 		cssEditor.onDidChangeModelContent(() => {
@@ -92,9 +100,13 @@ function App() {
 		})
 
 		const jsEditor = monaco.editor.create(document.getElementById("js"), {
+			automaticLayout: true,
 			value: js,
 			language: "javascript",
 			theme: "vs-dark",
+			minimap: {
+				enabled: false,
+			},
 		})
 
 		jsEditor.onDidChangeModelContent(() => {
