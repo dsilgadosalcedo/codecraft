@@ -1,5 +1,10 @@
 import "./App.css"
 import { useEffect, useState } from "react"
+import * as monaco from "monaco-editor"
+import CssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker"
+import EditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker"
+import HtmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker"
+import JsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
 import Split from "react-split-grid"
 
 const baseCode = `
@@ -49,31 +54,69 @@ function App() {
       </html>
     `)
 	}, [html, css, js])
+
+	useEffect(() => {
+		window.MonacoEnvironment = {
+			getWorker(_, label) {
+				switch (label) {
+					case "html":
+						return new HtmlWorker()
+					case "javascript":
+						return new JsWorker()
+					case "css":
+						return new CssWorker()
+					default:
+						return new EditorWorker()
+				}
+			},
+		}
+
+		const htmlEditor = monaco.editor.create(document.getElementById("html"), {
+			value: html,
+			language: "html",
+			theme: "vs-dark",
+		})
+
+		htmlEditor.onDidChangeModelContent(() => {
+			setHtml(htmlEditor.getValue())
+		})
+
+		const cssEditor = monaco.editor.create(document.getElementById("css"), {
+			value: css,
+			language: "css",
+			theme: "vs-dark",
+		})
+
+		cssEditor.onDidChangeModelContent(() => {
+			setCss(cssEditor.getValue())
+		})
+
+		const jsEditor = monaco.editor.create(document.getElementById("js"), {
+			value: js,
+			language: "javascript",
+			theme: "vs-dark",
+		})
+
+		jsEditor.onDidChangeModelContent(() => {
+			setJs(jsEditor.getValue())
+		})
+	}, [html, css, js])
 	return (
 		<Split
 			render={({ getGridProps, getGutterProps }) => (
 				<div className='grid-frame' {...getGridProps()}>
-					<textarea
-						className='p-4 font-mono outline-none overflow-hidden resize-none h-full w-full rounded-xl overflow-y-auto'
+					<div
 						id='html'
-						name='html'
-						onInput={(e) => setHtml(e.target.value)}
-						value={html}
-					></textarea>
-					<textarea
-						className='p-4 font-mono outline-none overflow-hidden resize-none h-full w-full rounded-xl overflow-y-auto'
+						className='overflow-hidden w-full h-full rounded-xl'
+					></div>
+					<div
 						id='css'
-						name='css'
-						onInput={(e) => setCss(e.target.value)}
-						value={css}
-					></textarea>
-					<textarea
-						className='p-4 font-mono outline-none overflow-hidden resize-none h-full w-full rounded-xl'
+						className='overflow-hidden w-full h-full rounded-xl'
+					></div>
+					<div
 						id='js'
-						name='js'
-						onInput={(e) => setJs(e.target.value)}
-						value={js}
-					></textarea>
+						className='overflow-hidden w-full h-full rounded-xl'
+					></div>
 					<iframe
 						id='iframe'
 						srcDoc={code}

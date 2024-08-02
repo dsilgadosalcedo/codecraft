@@ -10,6 +10,8 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"js-base64": "^3.7.7",
+		"monaco-editor": "^0.50.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-split-grid": "^1.0.4"
