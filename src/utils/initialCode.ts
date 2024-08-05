@@ -1,10 +1,19 @@
-export const initialHtml = `<h1>🥑 Hello</h1>`
+export const initialHtml = `<button>🥑 Say Hello</button>`
 
 export const initialCss = `body {
-  font-family: sans-serif;
   background-color: black;
   color: lightgray;
 }
+
+button {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: large;
+}
 `
 
-export const initialJs = ""
+export const initialJs = `document.querySelector('button').addEventListener(
+  'click',
+  () => alert('Hello')
+)`
