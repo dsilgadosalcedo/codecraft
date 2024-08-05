@@ -49,7 +49,7 @@ function App() {
         </head>
         <body>
           ${html}
-          <script>${js}</script>
+          <script defer>${js}</script>
         </body>
       </html>
     `)
@@ -79,6 +79,10 @@ function App() {
 			minimap: {
 				enabled: false,
 			},
+			padding: {
+				top: 14,
+			},
+			lineNumbers: "off",
 		})
 
 		htmlEditor.onDidChangeModelContent(() => {
@@ -93,6 +97,10 @@ function App() {
 			minimap: {
 				enabled: false,
 			},
+			padding: {
+				top: 14,
+			},
+			lineNumbers: "off",
 		})
 
 		cssEditor.onDidChangeModelContent(() => {
@@ -107,6 +115,10 @@ function App() {
 			minimap: {
 				enabled: false,
 			},
+			padding: {
+				top: 14,
+			},
+			lineNumbers: "off",
 		})
 
 		jsEditor.onDidChangeModelContent(() => {
