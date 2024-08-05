@@ -3,6 +3,7 @@ import { initialHtml, initialCss, initialJs } from "./utils/initialCode"
 import { setupMonacoEnvironment } from "./utils/monacoSetup"
 import { useEffect, useState } from "react"
 import Editor from "./components/Editor"
+import Preview from "./components/Preview"
 import Split from "react-split-grid"
 
 function App() {
@@ -39,11 +40,7 @@ function App() {
 					<Editor id='html' language='html' value={html} onChange={setHtml} />
 					<Editor id='css' language='css' value={css} onChange={setCss} />
 					<Editor id='js' language='javascript' value={js} onChange={setJs} />
-					<iframe
-						id='iframe'
-						srcDoc={code}
-						className='w-full h-full rounded-xl'
-					></iframe>
+					<Preview code={code} />
 					<div className='gutter-col' {...getGutterProps("column", 1)} />
 					<div className='gutter-row' {...getGutterProps("row", 1)} />
 				</div>
