@@ -39,7 +39,7 @@ const EditorLogo = ({ language }: { language: string }) => {
 
 	return (
 		<svg
-			className='absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 opacity-10'
+			className='absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 opacity-10 pointer-events-none'
 			xmlns='http://www.w3.org/2000/svg'
 			width='70'
 			height='70'
