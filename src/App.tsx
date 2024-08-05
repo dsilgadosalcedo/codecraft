@@ -34,6 +34,7 @@ function App() {
 
 	return (
 		<Split
+			// @ts-expect-error ts-migrate(2339)
 			render={({ getGridProps, getGutterProps }) => (
 				<div
 					className='grid h-screen grid-rows-[1fr_6px_1fr] grid-cols-[1fr_6px_1fr]'
