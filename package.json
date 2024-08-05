@@ -10,6 +10,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"emmet-monaco-es": "^5.4.0",
 		"js-base64": "^3.7.7",
 		"monaco-editor": "^0.50.0",
 		"react": "^18.2.0",

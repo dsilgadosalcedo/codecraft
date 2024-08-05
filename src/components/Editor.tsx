@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react"
 import * as monaco from "monaco-editor"
+import { emmetHTML, emmetCSS } from "emmet-monaco-es"
+
+emmetHTML(monaco)
+emmetCSS(monaco)
 
 function Editor({
 	id,
