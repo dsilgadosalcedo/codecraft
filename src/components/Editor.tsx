@@ -32,6 +32,7 @@ function Editor({
 				minimap: { enabled: false },
 				padding: { top: 14 },
 				scrollBeyondLastLine: false,
+				tabSize: 2,
 				theme: "vs-dark",
 				value,
 			})
