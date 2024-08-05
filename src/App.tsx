@@ -1,4 +1,3 @@
-import "./App.css"
 import { initialHtml, initialCss, initialJs } from "./utils/initialCode"
 import { setupMonacoEnvironment } from "./utils/monacoSetup"
 import { useEffect, useState } from "react"
@@ -36,17 +35,20 @@ function App() {
 	return (
 		<Split
 			render={({ getGridProps, getGutterProps }) => (
-				<div className='grid-frame' {...getGridProps()}>
+				<div
+					className='grid h-screen grid-rows-[1fr_6px_1fr] grid-cols-[1fr_6px_1fr]'
+					{...getGridProps()}
+				>
 					<Editor id='html' language='html' value={html} onChange={setHtml} />
 					<Editor id='css' language='css' value={css} onChange={setCss} />
 					<Editor id='js' language='javascript' value={js} onChange={setJs} />
 					<Preview code={code} />
 					<div
-						className='gutter-col cursor-col-resize'
+						className='col-start-2 col-end-2 row-start-1 row-end-4 cursor-col-resize'
 						{...getGutterProps("column", 1)}
 					/>
 					<div
-						className='gutter-row cursor-row-resize'
+						className='col-start-1 col-end-4 row-start-2 row-end-2 cursor-row-resize'
 						{...getGutterProps("row", 1)}
 					/>
 				</div>
