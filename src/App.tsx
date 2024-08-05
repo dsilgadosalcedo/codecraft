@@ -41,8 +41,14 @@ function App() {
 					<Editor id='css' language='css' value={css} onChange={setCss} />
 					<Editor id='js' language='javascript' value={js} onChange={setJs} />
 					<Preview code={code} />
-					<div className='gutter-col' {...getGutterProps("column", 1)} />
-					<div className='gutter-row' {...getGutterProps("row", 1)} />
+					<div
+						className='gutter-col cursor-col-resize'
+						{...getGutterProps("column", 1)}
+					/>
+					<div
+						className='gutter-row cursor-row-resize'
+						{...getGutterProps("row", 1)}
+					/>
 				</div>
 			)}
 		/>
