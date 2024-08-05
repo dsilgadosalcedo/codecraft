@@ -45,7 +45,7 @@ function Editor({
 	}, [id, language, value, onChange])
 
 	return (
-		<div className='overflow-hidden w-full h-full rounded-xl relative'>
+		<div className='overflow-hidden w-full h-full rounded-xl relative border border-green-400/30'>
 			<div id={id} className='w-full h-full'></div>
 			<svg
 				className='absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 opacity-10'
