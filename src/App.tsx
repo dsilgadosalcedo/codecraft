@@ -6,6 +6,7 @@ import EditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker"
 import HtmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker"
 import JsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
 import Split from "react-split-grid"
+import Editor from "./components/Editor"
 
 const baseCode = `
 <!DOCTYPE html>
@@ -71,10 +72,8 @@ function App() {
 			},
 		}
 
-		const htmlEditor = monaco.editor.create(document.getElementById("html"), {
+		const defaultEditorOptions = {
 			automaticLayout: true,
-			value: html,
-			language: "html",
 			theme: "vs-dark",
 			minimap: {
 				enabled: false,
@@ -83,6 +82,12 @@ function App() {
 				top: 14,
 			},
 			lineNumbers: "off",
+		}
+
+		const htmlEditor = monaco.editor.create(document.getElementById("html"), {
+			value: html,
+			language: "html",
+			...defaultEditorOptions,
 		})
 
 		htmlEditor.onDidChangeModelContent(() => {
@@ -90,17 +95,9 @@ function App() {
 		})
 
 		const cssEditor = monaco.editor.create(document.getElementById("css"), {
-			automaticLayout: true,
 			value: css,
 			language: "css",
-			theme: "vs-dark",
-			minimap: {
-				enabled: false,
-			},
-			padding: {
-				top: 14,
-			},
-			lineNumbers: "off",
+			...defaultEditorOptions,
 		})
 
 		cssEditor.onDidChangeModelContent(() => {
@@ -108,17 +105,9 @@ function App() {
 		})
 
 		const jsEditor = monaco.editor.create(document.getElementById("js"), {
-			automaticLayout: true,
 			value: js,
 			language: "javascript",
-			theme: "vs-dark",
-			minimap: {
-				enabled: false,
-			},
-			padding: {
-				top: 14,
-			},
-			lineNumbers: "off",
+			...defaultEditorOptions,
 		})
 
 		jsEditor.onDidChangeModelContent(() => {
@@ -129,18 +118,9 @@ function App() {
 		<Split
 			render={({ getGridProps, getGutterProps }) => (
 				<div className='grid-frame' {...getGridProps()}>
-					<div
-						id='html'
-						className='overflow-hidden w-full h-full rounded-xl'
-					></div>
-					<div
-						id='css'
-						className='overflow-hidden w-full h-full rounded-xl'
-					></div>
-					<div
-						id='js'
-						className='overflow-hidden w-full h-full rounded-xl'
-					></div>
+					<Editor id='html' language='html' value={html} onChange={setHtml} />
+					<Editor id='css' language='css' value={css} onChange={setCss} />
+					<Editor id='js' language='javascript' value={js} onChange={setJs} />
 					<iframe
 						id='iframe'
 						srcDoc={code}
