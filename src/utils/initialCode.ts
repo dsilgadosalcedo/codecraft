@@ -1,13 +1,13 @@
 export const initialHtml = `<button>🥑 Say Hello</button>`
 
 export const initialCss = `body {
-  background-color: black;
+  background-color: #111;
   color: lightgray;
 }
 
 button {
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: large;
 }
