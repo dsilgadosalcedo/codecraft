@@ -37,7 +37,7 @@ function App() {
 			// @ts-expect-error ts-migrate(2339)
 			render={({ getGridProps, getGutterProps }) => (
 				<div
-					className='grid h-screen grid-rows-[1fr_6px_1fr] grid-cols-[1fr_6px_1fr]'
+					className='flex flex-col gap-2 md:gap-0 p-2 md:grid min-h-screen md:h-screen grid-rows-[1fr_6px_1fr] grid-cols-[1fr_6px_1fr]'
 					{...getGridProps()}
 				>
 					<Editor id='html' language='html' value={html} onChange={setHtml} />
