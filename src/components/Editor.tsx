@@ -21,13 +21,15 @@ function Editor({
 
 		if (!editorRef.current) {
 			const editor = monaco.editor.create(element, {
-				value,
-				language,
 				automaticLayout: true,
-				theme: "vs-dark",
+				fixedOverflowWidgets: true,
+				language,
+				lineNumbers: "off",
 				minimap: { enabled: false },
 				padding: { top: 14 },
-				lineNumbers: "off",
+				scrollBeyondLastLine: false,
+				theme: "vs-dark",
+				value,
 			})
 
 			editor.onDidChangeModelContent(() => {
