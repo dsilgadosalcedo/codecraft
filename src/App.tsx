@@ -1,6 +1,6 @@
 import { initialHtml, initialCss, initialJs } from "./utils/initialCode"
 import { setupMonacoEnvironment } from "./utils/monacoSetup"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Editor from "./components/Editor"
 import Preview from "./components/Preview"
 import Split from "react-split-grid"
@@ -34,6 +34,8 @@ function App() {
 
 	return (
 		<Split
+			gridTemplateRows="1fr 6px 1fr"
+			gridTemplateColumns="1fr 6px 1fr"
 			// @ts-expect-error ts-migrate(2339)
 			render={({ getGridProps, getGutterProps }) => (
 				<div

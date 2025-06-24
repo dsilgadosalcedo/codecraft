@@ -1,5 +1,5 @@
 import { emmetHTML, emmetCSS } from "emmet-monaco-es"
-import { useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import * as monaco from "monaco-editor"
 import EditorLogo from "./EditorLogo"
 
@@ -17,7 +17,7 @@ function Editor({
 	value: string
 	onChange: (value: string) => void
 }) {
-	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>()
+	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
 
 	useEffect(() => {
 		const element = document.getElementById(id)

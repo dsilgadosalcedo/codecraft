@@ -1,0 +1,11 @@
+{
+  "projectName": "codehere",
+  "mode": "code-router",
+  "typescript": false,
+  "tailwind": false,
+  "packageManager": "npm",
+  "git": true,
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": []
+}
