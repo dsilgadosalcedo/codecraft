@@ -1,7 +1,7 @@
 import React from 'react'
 import { useWorkspaceStore } from '../store/useWorkspaceStore'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
+import { SidebarMenuButton } from '@/components/ui/sidebar'
 
 export default function SwitchWorkspaceDropdown() {
   const workspaces = useWorkspaceStore(state => state.workspaces)
@@ -12,7 +12,7 @@ export default function SwitchWorkspaceDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">{currentWorkspace?.name || 'Workspace'}</Button>
+        <SidebarMenuButton>{currentWorkspace?.name || 'Workspace'}</SidebarMenuButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {workspaces.map(ws => (

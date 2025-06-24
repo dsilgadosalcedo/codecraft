@@ -1,59 +1,50 @@
-import React, { StrictMode } from 'react'
-import ReactDOM from 'react-dom/client'
+import React, { StrictMode } from "react"
+import ReactDOM from "react-dom/client"
 import {
   Outlet,
   RouterProvider,
   createRootRoute,
   createRoute,
   createRouter,
-} from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import Projects from './components/Projects.jsx'
-import './styles.css'
-import reportWebVitals from './reportWebVitals.js'
+} from "@tanstack/react-router"
+import "./styles.css"
+import reportWebVitals from "./reportWebVitals.js"
 
-import App from './App.jsx'
-
+import App from "./App.jsx"
 
 const rootRoute = createRootRoute({
   component: () => (
     <>
       <Outlet />
-      <TanStackRouterDevtools />
+      {/* <TanStackRouterDevtools /> */}
     </>
   ),
 })
 
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/',
+  path: "/",
   component: App,
 })
 
-const aboutRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/projects",
-  component: Projects,
-});
-
-const routeTree = rootRoute.addChildren([indexRoute, aboutRoute])
+const routeTree = rootRoute.addChildren([indexRoute])
 
 const router = createRouter({
   routeTree,
   context: {},
-  defaultPreload: 'intent',
+  defaultPreload: "intent",
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
 })
 
-const rootElement = document.getElementById('app')
+const rootElement = document.getElementById("app")
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
       <RouterProvider router={router} />
-    </StrictMode>,
+    </StrictMode>
   )
 }
 
