@@ -1,6 +1,7 @@
 import React from 'react'
 import { useWorkspaceStore } from '../store/useWorkspaceStore'
 import JSZip from 'jszip'
+import { Button } from '@/components/ui/button'
 
 function WorkspaceSidebar() {
   const workspaces = useWorkspaceStore(state => state.workspaces)
@@ -40,16 +41,16 @@ function WorkspaceSidebar() {
           </li>
         ))}
       </ul>
-      <button
+      <Button
         onClick={() => {
           const name = prompt('Workspace name')
           if (name) createWorkspace(name)
         }}
-        className="mt-2 w-full bg-green-500 hover:bg-green-600 text-white py-1 rounded"
+        className="mt-2 w-full"
       >
         + New Workspace
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={async () => {
           const zip = new JSZip()
           zip.file('index.html', currentWorkspace.html)
@@ -63,11 +64,12 @@ function WorkspaceSidebar() {
           a.click()
           URL.revokeObjectURL(url)
         }}
-        className="mt-2 w-full bg-blue-500 hover:bg-blue-600 text-white py-1 rounded"
+        className="mt-2 w-full"
+        variant="secondary"
       >
         Export ZIP
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={async () => {
           const token = prompt('GitHub token for Gist export')
           if (!token) return
@@ -95,10 +97,11 @@ function WorkspaceSidebar() {
             alert('Error creating gist')
           }
         }}
-        className="mt-2 w-full bg-purple-500 hover:bg-purple-600 text-white py-1 rounded"
+        className="mt-2 w-full"
+        variant="secondary"
       >
         Export Gist
-      </button>
+      </Button>
       <input
         type="file"
         accept=".zip"
