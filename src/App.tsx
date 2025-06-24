@@ -8,6 +8,7 @@ import WorkspaceSidebar from "./components/WorkspaceSidebar"
 import SwitchWorkspaceDropdown from "./components/SwitchWorkspaceDropdown"
 import TemplateSelector from "./components/TemplateSelector"
 import SettingsModal from "./components/SettingsModal"
+import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar"
 
 function App() {
 	const workspaces = useWorkspaceStore(state => state.workspaces)
@@ -43,15 +44,15 @@ function App() {
 	}, [html, css, js])
 
 	return (
-		<div className="flex h-screen">
+		<SidebarProvider defaultOpen={false}>
 			<WorkspaceSidebar />
-			<div className="flex flex-1 flex-col">
-				<header className="flex items-center justify-end space-x-2 p-2 bg-gray-100">
+			<main className="w-full">
+				<header className="flex items-center justify-end space-x-2 h-13 bg-gray-100">
 					<SwitchWorkspaceDropdown />
 					<TemplateSelector />
 					<SettingsModal />
 				</header>
-				<Split
+					<Split
 					gridTemplateRows="1fr 6px 1fr"
 					gridTemplateColumns="1fr 6px 1fr"
 					// @ts-expect-error ts-migrate(2339)
@@ -73,10 +74,10 @@ function App() {
 								{...getGutterProps("row", 1)}
 							/>
 						</div>
-					)}
-				/>
-			</div>
-		</div>
+						)}
+					/>
+			</main>
+		</SidebarProvider>
 	)
 }
 
