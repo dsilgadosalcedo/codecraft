@@ -5,6 +5,9 @@ import Preview from "./components/Preview"
 import Split from "react-split-grid"
 import { useWorkspaceStore } from "./store/useWorkspaceStore"
 import WorkspaceSidebar from "./components/WorkspaceSidebar"
+import SwitchWorkspaceDropdown from "./components/SwitchWorkspaceDropdown"
+import TemplateSelector from "./components/TemplateSelector"
+import SettingsModal from "./components/SettingsModal"
 
 function App() {
 	const workspaces = useWorkspaceStore(state => state.workspaces)
@@ -42,30 +45,37 @@ function App() {
 	return (
 		<div className="flex h-screen">
 			<WorkspaceSidebar />
-			<Split
-				gridTemplateRows="1fr 6px 1fr"
-				gridTemplateColumns="1fr 6px 1fr"
-				// @ts-expect-error ts-migrate(2339)
-				render={({ getGridProps, getGutterProps }) => (
-					<div
-						className='flex flex-col gap-2 md:gap-0 p-2 md:grid min-h-screen md:h-screen grid-rows-[1fr_6px_1fr] grid-cols-[1fr_6px_1fr]'
-						{...getGridProps()}
-					>
-						<Editor id='html' language='html' value={html} onChange={setHtml} />
-						<Editor id='css' language='css' value={css} onChange={setCss} />
-						<Editor id='js' language='javascript' value={js} onChange={setJs} />
-						<Preview code={code} />
+			<div className="flex flex-1 flex-col">
+				<header className="flex items-center justify-end space-x-2 p-2 bg-gray-100">
+					<SwitchWorkspaceDropdown />
+					<TemplateSelector />
+					<SettingsModal />
+				</header>
+				<Split
+					gridTemplateRows="1fr 6px 1fr"
+					gridTemplateColumns="1fr 6px 1fr"
+					// @ts-expect-error ts-migrate(2339)
+					render={({ getGridProps, getGutterProps }) => (
 						<div
-							className='col-start-2 col-end-2 row-start-1 row-end-4 cursor-col-resize'
-							{...getGutterProps("column", 1)}
-						/>
-						<div
-							className='col-start-1 col-end-4 row-start-2 row-end-2 cursor-row-resize'
-							{...getGutterProps("row", 1)}
-						/>
-					</div>
-				)}
-			/>
+							className='flex flex-col gap-2 md:gap-0 p-2 md:grid min-h-screen md:h-screen grid-rows-[1fr_6px_1fr] grid-cols-[1fr_6px_1fr]'
+							{...getGridProps()}
+						>
+							<Editor id='html' language='html' value={html} onChange={setHtml} />
+							<Editor id='css' language='css' value={css} onChange={setCss} />
+							<Editor id='js' language='javascript' value={js} onChange={setJs} />
+							<Preview code={code} />
+							<div
+								className='col-start-2 col-end-2 row-start-1 row-end-4 cursor-col-resize'
+								{...getGutterProps("column", 1)}
+							/>
+							<div
+								className='col-start-1 col-end-4 row-start-2 row-end-2 cursor-row-resize'
+								{...getGutterProps("row", 1)}
+							/>
+						</div>
+					)}
+				/>
+			</div>
 		</div>
 	)
 }
