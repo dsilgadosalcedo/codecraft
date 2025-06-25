@@ -10,7 +10,7 @@ import useTheme from "@/hooks/useTheme"
 import { SidebarMenuButton } from "./ui/sidebar"
 
 export default function ModeToggle() {
-  const [setTheme] = useTheme()
+  const [theme, setTheme] = useTheme()
 
   return (
     <DropdownMenu>
