@@ -1,16 +1,16 @@
-import React, { StrictMode } from "react"
-import ReactDOM from "react-dom/client"
-import { ThemeProvider } from "next-themes"
+import React, { StrictMode } from 'react'
+import ReactDOM from 'react-dom/client'
+import { ThemeProvider } from 'next-themes'
 import {
   Outlet,
   RouterProvider,
   createRootRoute,
   createRoute,
   createRouter,
-} from "@tanstack/react-router"
-import App from "./App.tsx"
-import "./styles.css"
-import reportWebVitals from "./reportWebVitals.js"
+} from '@tanstack/react-router'
+import App from './App.tsx'
+import './styles.css'
+import reportWebVitals from './reportWebVitals.js'
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -28,7 +28,7 @@ const rootRoute = createRootRoute({
 
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/",
+  path: '/',
   component: App,
 })
 
@@ -37,13 +37,13 @@ const routeTree = rootRoute.addChildren([indexRoute])
 const router = createRouter({
   routeTree,
   context: {},
-  defaultPreload: "intent",
+  defaultPreload: 'intent',
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
 })
 
-const rootElement = document.getElementById("app")
+const rootElement = document.getElementById('app')
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(

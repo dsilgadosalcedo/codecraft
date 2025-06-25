@@ -1,7 +1,9 @@
-import { create } from "zustand"
-import { persist } from "zustand/middleware"
-import { initialHtml, initialCss, initialJs } from "../utils/initialCode"
-import type { Workspace, WorkspaceFiles } from "@/types"
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+
+import type { Workspace, WorkspaceFiles } from '@/types'
+
+import { initialCss, initialHtml, initialJs } from '../utils/initialCode'
 
 type WorkspaceStore = {
   workspaces: Workspace[]
@@ -18,7 +20,7 @@ export const useWorkspaceStore = create<WorkspaceStore>()(
     (set, get) => {
       const defaultWorkspace: Workspace = {
         id: Date.now().toString(),
-        name: "Workspace 1",
+        name: 'Workspace 1',
         html: initialHtml,
         css: initialCss,
         js: initialJs,
@@ -43,7 +45,7 @@ export const useWorkspaceStore = create<WorkspaceStore>()(
             createdAt: now,
             updatedAt: now,
           }
-          set((state) => ({
+          set(state => ({
             workspaces: [...state.workspaces, newWs],
             currentWorkspaceId: newWs.id,
           }))
@@ -54,21 +56,21 @@ export const useWorkspaceStore = create<WorkspaceStore>()(
         },
 
         renameWorkspace: (id: string, name: string) => {
-          set((state) => ({
-            workspaces: state.workspaces.map((w) =>
+          set(state => ({
+            workspaces: state.workspaces.map(w =>
               w.id === id ? { ...w, name, updatedAt: new Date() } : w
             ),
           }))
         },
 
         deleteWorkspace: (id: string) => {
-          set((state) => {
-            const updated = state.workspaces.filter((w) => w.id !== id)
+          set(state => {
+            const updated = state.workspaces.filter(w => w.id !== id)
             if (updated.length === 0) {
               const now = new Date()
               const newWs: Workspace = {
                 id: Date.now().toString(),
-                name: "Workspace 1",
+                name: 'Workspace 1',
                 html: initialHtml,
                 css: initialCss,
                 js: initialJs,
@@ -86,8 +88,8 @@ export const useWorkspaceStore = create<WorkspaceStore>()(
         },
 
         updateWorkspaceFiles: (data: Partial<WorkspaceFiles>) => {
-          set((state) => ({
-            workspaces: state.workspaces.map((w) =>
+          set(state => ({
+            workspaces: state.workspaces.map(w =>
               w.id === state.currentWorkspaceId
                 ? { ...w, ...data, updatedAt: new Date() }
                 : w
@@ -97,14 +99,14 @@ export const useWorkspaceStore = create<WorkspaceStore>()(
       }
     },
     {
-      name: "workspace-storage",
-      onRehydrateStorage: () => (state) => {
+      name: 'workspace-storage',
+      onRehydrateStorage: () => state => {
         if (state) {
           if (!state.workspaces || state.workspaces.length === 0) {
             const now = new Date()
             const newWs: Workspace = {
               id: Date.now().toString(),
-              name: "Workspace 1",
+              name: 'Workspace 1',
               html: initialHtml,
               css: initialCss,
               js: initialJs,

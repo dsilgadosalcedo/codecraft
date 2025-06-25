@@ -1,16 +1,18 @@
-import React from "react"
-import { Template } from "./built-in-templates"
+import { LayoutTemplate } from 'lucide-react' // Add an icon from lucide-react
+import React from 'react'
+
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogFooter,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { SidebarMenuButton } from "@/components/ui/sidebar"
-import { LayoutTemplate } from "lucide-react" // Add an icon from lucide-react
+} from '@/components/ui/dialog'
+import { SidebarMenuButton } from '@/components/ui/sidebar'
+
+import { Template } from './built-in-templates'
 
 export interface TemplateSelectorUIProps {
   templates: Template[]
@@ -37,7 +39,7 @@ export default function TemplateSelectorUI({
         </DialogHeader>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto pr-2">
-          {templates.map((template) => (
+          {templates.map(template => (
             <div
               key={template.name}
               className="group relative border rounded-lg p-4 hover:border-primary hover:shadow-md transition-all cursor-pointer bg-card"

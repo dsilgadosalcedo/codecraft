@@ -1,12 +1,12 @@
-import { describe, it, expect } from "vitest"
+import { describe, expect, it } from 'vitest'
 
-describe("useWorkspaces", () => {
-  it("should pass a basic test", () => {
+describe('useWorkspaces', () => {
+  it('should pass a basic test', () => {
     expect(1 + 1).toBe(2)
   })
 
-  it("should validate hook exists", () => {
+  it('should validate hook exists', () => {
     // This test validates that the hook file can be imported
-    expect(typeof import("./use-workspaces")).toBe("object")
+    expect(typeof import('./use-workspaces')).toBe('object')
   })
 })

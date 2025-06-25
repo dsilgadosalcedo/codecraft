@@ -1,10 +1,10 @@
-import { useAiStore } from "@/store/useAiStore"
+import { useAiStore } from '@/store/useAiStore'
 import type {
   AiCompletionRequest,
   AiCompletionResponse,
-  OpenAIResponse,
   GeminiResponse,
-} from "@/types"
+  OpenAIResponse,
+} from '@/types'
 
 export function useAiCompletion() {
   const { apiKey, model, provider } = useAiStore()
@@ -14,7 +14,7 @@ export function useAiCompletion() {
     language: string
   ): Promise<AiCompletionResponse> => {
     if (!apiKey) {
-      return { suggestions: [], error: "API key not configured" }
+      return { suggestions: [], error: 'API key not configured' }
     }
 
     const request: AiCompletionRequest = {
@@ -25,16 +25,16 @@ export function useAiCompletion() {
     }
 
     try {
-      if (provider === "openai") {
+      if (provider === 'openai') {
         return await getOpenAICompletion(request)
       } else {
         return await getGeminiCompletion(request)
       }
     } catch (error) {
-      console.error("AI completion error:", error)
+      console.error('AI completion error:', error)
       return {
         suggestions: [],
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
       }
     }
   }
@@ -42,11 +42,11 @@ export function useAiCompletion() {
   const getOpenAICompletion = async (
     request: AiCompletionRequest
   ): Promise<AiCompletionResponse> => {
-    const response = await fetch("https://api.openai.com/v1/completions", {
-      method: "POST",
+    const response = await fetch('https://api.openai.com/v1/completions', {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: request.model,
@@ -62,7 +62,7 @@ export function useAiCompletion() {
 
     const data: OpenAIResponse = await response.json()
     const suggestions =
-      data.choices?.map((choice) => choice.text || "").filter(Boolean) || []
+      data.choices?.map(choice => choice.text || '').filter(Boolean) || []
 
     return { suggestions }
   }
@@ -73,8 +73,8 @@ export function useAiCompletion() {
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${request.model}:generateContent?key=${apiKey}`,
       {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [
             {
@@ -94,7 +94,7 @@ export function useAiCompletion() {
     }
 
     const data: GeminiResponse = await response.json()
-    const suggestion = data.candidates?.[0]?.output || data.text || ""
+    const suggestion = data.candidates?.[0]?.output || data.text || ''
 
     return { suggestions: suggestion ? [suggestion] : [] }
   }

@@ -1,13 +1,15 @@
-import React from "react"
-import TemplateSelectorUI from "./template-selector.ui"
-import { builtInTemplates, Template } from "./built-in-templates"
-import { useCustomTemplates } from "./use-custom-templates"
-import { useWorkspaceStore } from "@/store/useWorkspaceStore"
+import React from 'react'
+
+import { useWorkspaceStore } from '@/store/useWorkspaceStore'
+
+import { builtInTemplates, Template } from './built-in-templates'
+import TemplateSelectorUI from './template-selector.ui'
+import { useCustomTemplates } from './use-custom-templates'
 
 export default function TemplateSelectorContainer() {
   const { customTemplates, saveCustomTemplate } = useCustomTemplates()
-  const createWorkspace = useWorkspaceStore((s) => s.createWorkspace)
-  const updateWorkspaceFiles = useWorkspaceStore((s) => s.updateWorkspaceFiles)
+  const createWorkspace = useWorkspaceStore(s => s.createWorkspace)
+  const updateWorkspaceFiles = useWorkspaceStore(s => s.updateWorkspaceFiles)
 
   const allTemplates: Template[] = [...builtInTemplates, ...customTemplates]
 

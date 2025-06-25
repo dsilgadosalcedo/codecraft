@@ -1,0 +1,9 @@
+dist/
+build/
+node_modules/
+public/
+coverage/
+pnpm-lock.yaml
+*.min.js
+*.min.css
+.husky/ 

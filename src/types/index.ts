@@ -32,7 +32,7 @@ export interface Template {
 }
 
 // AI completion types
-export type AiProvider = "openai" | "gemini"
+export type AiProvider = 'openai' | 'gemini'
 
 export interface AiSettings {
   apiKey: string

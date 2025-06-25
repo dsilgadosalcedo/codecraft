@@ -1,12 +1,12 @@
-import { describe, it, expect } from "vitest"
+import { describe, expect, it } from 'vitest'
 
-describe("useCustomTemplates", () => {
-  it("should pass a basic test", () => {
+describe('useCustomTemplates', () => {
+  it('should pass a basic test', () => {
     expect(true).toBe(true)
   })
 
-  it("should validate hook exists", () => {
+  it('should validate hook exists', () => {
     // This test validates that the hook file can be imported
-    expect(typeof import("./use-custom-templates")).toBe("object")
+    expect(typeof import('./use-custom-templates')).toBe('object')
   })
 })

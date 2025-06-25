@@ -1,13 +1,17 @@
-import React from "react"
-import { Layout, PenTool, Zap } from "lucide-react"
-import type { Template } from "@/types"
+import { Layout, PenTool, Zap } from 'lucide-react'
+import React from 'react'
+
+import type { Template } from '@/types'
+
+// Re-export Template type for convenience
+export type { Template }
 
 export const builtInTemplates: Template[] = [
   {
-    name: "Tailwind CSS",
-    description: "Basic Tailwind CSS setup with utility classes",
+    name: 'Tailwind CSS',
+    description: 'Basic Tailwind CSS setup with utility classes',
     icon: <Layout className="h-6 w-6" />,
-    category: "CSS",
+    category: 'CSS',
     isCustom: false,
     files: {
       html: `<!DOCTYPE html>
@@ -39,10 +43,10 @@ document.querySelector('button').addEventListener('click', () => {
     },
   },
   {
-    name: "React Components",
-    description: "Basic React setup with functional components and hooks",
+    name: 'React Components',
+    description: 'Basic React setup with functional components and hooks',
     icon: <PenTool className="h-6 w-6" />,
-    category: "Framework",
+    category: 'Framework',
     isCustom: false,
     files: {
       html: `<!DOCTYPE html>
@@ -108,10 +112,10 @@ console.log('React app loaded!');
     },
   },
   {
-    name: "Vue Starter",
-    description: "Basic Vue.js setup with reactive data and methods",
+    name: 'Vue Starter',
+    description: 'Basic Vue.js setup with reactive data and methods',
     icon: <Zap className="h-6 w-6" />,
-    category: "Framework",
+    category: 'Framework',
     isCustom: false,
     files: {
       html: `<!DOCTYPE html>
