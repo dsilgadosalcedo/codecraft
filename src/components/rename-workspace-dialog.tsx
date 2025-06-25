@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from "react"
+import { Edit } from 'lucide-react'
+import React from 'react'
+
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
-  DialogTrigger,
+  DialogClose,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Edit } from "lucide-react"
-import { useWorkspaceStore } from "@/store/useWorkspaceStore"
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { useRenameWorkspace } from '@/features/workspace/use-rename-workspace'
 
 export default function RenameWorkspaceDialog({
   workspace,
 }: {
   workspace: { id: string; name: string }
 }) {
-  const renameWorkspace = useWorkspaceStore((state) => state.renameWorkspace)
-  const [name, setName] = useState(workspace.name)
-
-  useEffect(() => {
-    setName(workspace.name)
-  }, [workspace.name])
+  const { name, setName, save } = useRenameWorkspace(
+    workspace.name,
+    workspace.id
+  )
 
   return (
     <Dialog>
@@ -41,16 +40,14 @@ export default function RenameWorkspaceDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="py-2">
-          <Input value={name} onChange={(e) => setName(e.target.value)} />
+          <Input value={name} onChange={e => setName(e.target.value)} />
         </div>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button onClick={() => renameWorkspace(workspace.id, name)}>
-              Save
-            </Button>
+            <Button onClick={save}>Save</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

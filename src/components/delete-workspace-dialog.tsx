@@ -1,24 +1,25 @@
-import React from "react"
+import { Trash2 } from 'lucide-react'
+import React from 'react'
+
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
-  DialogTrigger,
+  DialogClose,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Trash2 } from "lucide-react"
-import { useWorkspaceStore } from "@/store/useWorkspaceStore"
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { useDeleteWorkspace } from '@/features/workspace/use-delete-workspace'
 
 export default function DeleteWorkspaceDialog({
   workspace,
 }: {
   workspace: { id: string; name: string }
 }) {
-  const deleteWorkspace = useWorkspaceStore((state) => state.deleteWorkspace)
+  const { deleteWorkspace } = useDeleteWorkspace(workspace.id)
 
   return (
     <Dialog>
@@ -31,7 +32,7 @@ export default function DeleteWorkspaceDialog({
         <DialogHeader>
           <DialogTitle>Delete Workspace</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete the workspace{" "}
+            Are you sure you want to delete the workspace{' '}
             <strong>{workspace.name}</strong>? This action cannot be undone.
           </DialogDescription>
         </DialogHeader>
@@ -40,10 +41,7 @@ export default function DeleteWorkspaceDialog({
             <Button variant="outline">Cancel</Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button
-              variant="destructive"
-              onClick={() => deleteWorkspace(workspace.id)}
-            >
+            <Button variant="destructive" onClick={deleteWorkspace}>
               Delete
             </Button>
           </DialogClose>
