@@ -99,6 +99,13 @@ function Editor({
     }
   }, [id, language, value, onChange])
 
+  // Update editor content when value prop changes
+  useEffect(() => {
+    if (editorRef.current && editorRef.current.getValue() !== value) {
+      editorRef.current.setValue(value)
+    }
+  }, [value])
+
   return (
     <div className="overflow-hidden w-full h-96 md:h-full rounded-xl relative border border-green-400/30">
       <div id={id} className="w-full h-full"></div>
