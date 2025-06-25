@@ -55,6 +55,9 @@ describe('NavProjectsUI', () => {
         />
       </SidebarProvider>
     )
+    // Spy on the file input click method on the actual DOM element
+    const inputEl = fileInputRef.current as HTMLInputElement
+    inputEl.click = vi.fn()
     fireEvent.click(screen.getByText('Export ZIP'))
     expect(exportZipHandler).toHaveBeenCalled()
 

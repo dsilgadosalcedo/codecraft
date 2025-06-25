@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import React from 'react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest'
 
 import { useAiStore } from '@/store/useAiStore'
 
@@ -37,7 +37,7 @@ describe('useAiCompletion hook', () => {
   it('calls OpenAI API and returns suggestions', async () => {
     useAiStore.setState({ apiKey: 'key', model: 'model', provider: 'openai' })
     const fakeResponse = { choices: [{ text: 'suggestion' }] }
-    ;(fetch as unknown as vi.Mock).mockResolvedValue({
+    ;(fetch as unknown as Mock).mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(fakeResponse),
     })
@@ -60,7 +60,7 @@ describe('useAiCompletion hook', () => {
   it('calls Gemini API and returns suggestions', async () => {
     useAiStore.setState({ apiKey: 'key', model: 'model', provider: 'gemini' })
     const fakeResponse = { candidates: [{ output: 'gen' }], text: '' }
-    ;(fetch as unknown as vi.Mock).mockResolvedValue({
+    ;(fetch as unknown as Mock).mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(fakeResponse),
     })
