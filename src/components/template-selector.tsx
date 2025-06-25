@@ -444,6 +444,31 @@ createApp({
 }).mount('#app');`,
     },
   },
+  {
+    name: "Tailwind Starter",
+    description: "Starter template with Tailwind CSS via CDN",
+    icon: <Sparkles className="h-6 w-6" />,
+    category: "CSS",
+    files: {
+      html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tailwind Starter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <div class="p-6 bg-white rounded-xl shadow-lg text-center">
+    <h1 class="text-3xl font-bold mb-4">Hello, Tailwind!</h1>
+    <p class="text-gray-600">Your Tailwind CSS environment is ready.</p>
+  </div>
+</body>
+</html>`,
+      css: ``,
+      js: ``,
+    },
+  },
 ]
 
 export default function TemplateSelector() {
