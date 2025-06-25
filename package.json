@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "dev": "vite",
     "start": "vite --port 3000",
     "build": "tsc -b && vite build",
@@ -46,6 +48,7 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
+    "@cypress/vite-dev-server": "^6.0.3",
     "@eslint/js": "^9.29.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -58,6 +61,7 @@
     "@typescript-eslint/parser": "^8.35.0",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/ui": "^3.2.4",
+    "cypress": "^14.5.0",
     "eslint": "^9.29.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
