@@ -510,7 +510,47 @@ export default function TemplateSelector() {
     setIsOpen(false)
   }
 
-  const allTemplates = [...builtInTemplates, ...customTemplates]
+  // Filter out Landing Page and Blog Post, then add React Starter
+  const filteredBuiltInTemplates = builtInTemplates.filter(
+    (template) => template.category !== "Web" && template.category !== "Content"
+  )
+
+  const allTemplates = [
+    ...filteredBuiltInTemplates,
+    {
+      name: "React Starter",
+      description: "Starter template with React via CDN",
+      icon: <Code className="h-6 w-6" />,
+      category: "Framework",
+      files: {
+        html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React Starter</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body class="p-6 bg-white">
+  <div id="root"></div>
+  <script>
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      React.createElement('div', { className: 'p-6 bg-white rounded-xl shadow-lg text-center' },
+        React.createElement('h1', { className: 'text-3xl font-bold mb-4' }, 'Hello, React via CDN!'),
+        React.createElement('p', { className: 'text-gray-600' }, 'Your React environment is ready.')
+      )
+    );
+  </script>
+</body>
+</html>`,
+        css: ``,
+        js: ``,
+      },
+    },
+    ...customTemplates,
+  ]
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

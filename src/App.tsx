@@ -5,8 +5,8 @@ import { useWorkspaceStore } from "./store/useWorkspaceStore"
 
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar"
-import Editor from "@/components/Editor"
-import Preview from "@/components/Preview"
+import Editor from "@/components/editor"
+import Preview from "@/components/preview"
 import { Button } from "@/components/ui/button"
 import { Maximize2, Minimize2 } from "lucide-react"
 
@@ -33,20 +33,28 @@ function App() {
   }, [])
 
   useEffect(() => {
-    setCode(`
-      <!DOCTYPE html>
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <title>Codecraft project</title>
-          <style>${css}</style>
-        </head>
-        <body>
-          ${html}
-          <script defer>${js}</script>
-        </body>
-      </html>
-    `)
+    // Extract any <head> and <body> content from the template HTML
+    const raw = html || ""
+    const headMatch = raw.match(/<head[^>]*>([\s\S]*?)<\/head>/i)
+    const bodyMatch = raw.match(/<body[^>]*>([\s\S]*?)<\/body>/i)
+    const injectedHead = headMatch ? headMatch[1] : ""
+    const injectedBody = bodyMatch ? bodyMatch[1] : raw
+
+    // Build the final document, preserving template head tags (e.g., CDNs)
+    const full = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Codecraft project</title>
+  ${injectedHead}
+  <style>${css}</style>
+</head>
+<body>
+  ${injectedBody}
+  <script defer>${js}</script>
+</body>
+</html>`
+    setCode(full)
   }, [html, css, js])
 
   return (
@@ -57,9 +65,9 @@ function App() {
           <div className="relative w-full h-screen p-2">
             <div className="absolute top-2 right-2 z-10">
               <Button
-                variant="ghost"
                 size="icon"
                 onClick={() => setMaximized(null)}
+                className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
               >
                 <Minimize2 size={16} />
               </Button>
