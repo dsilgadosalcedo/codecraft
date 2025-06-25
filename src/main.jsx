@@ -8,7 +8,7 @@ import {
   createRoute,
   createRouter,
 } from "@tanstack/react-router"
-import App from "./App.jsx"
+import App from "./App.tsx"
 import "./styles.css"
 import reportWebVitals from "./reportWebVitals.js"
 
