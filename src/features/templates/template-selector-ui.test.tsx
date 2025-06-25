@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { SidebarProvider } from '@/components/ui/sidebar'
+
 import type { Template } from './built-in-templates'
 import TemplateSelectorUI from './template-selector.ui'
 
@@ -31,11 +33,13 @@ describe('TemplateSelectorUI', () => {
 
   it('displays the trigger button', () => {
     render(
-      <TemplateSelectorUI
-        templates={templates}
-        onSelect={onSelect}
-        onSaveCustom={onSaveCustom}
-      />
+      <SidebarProvider>
+        <TemplateSelectorUI
+          templates={templates}
+          onSelect={onSelect}
+          onSaveCustom={onSaveCustom}
+        />
+      </SidebarProvider>
     )
     expect(screen.getByText(/Templates/i)).toBeInTheDocument()
   })
@@ -43,11 +47,13 @@ describe('TemplateSelectorUI', () => {
   it('opens dialog and shows templates on trigger click', async () => {
     const user = userEvent.setup()
     render(
-      <TemplateSelectorUI
-        templates={templates}
-        onSelect={onSelect}
-        onSaveCustom={onSaveCustom}
-      />
+      <SidebarProvider>
+        <TemplateSelectorUI
+          templates={templates}
+          onSelect={onSelect}
+          onSaveCustom={onSaveCustom}
+        />
+      </SidebarProvider>
     )
     await user.click(screen.getByText(/Templates/i))
     expect(screen.getByText('Select Template')).toBeInTheDocument()

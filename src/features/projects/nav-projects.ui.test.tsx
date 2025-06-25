@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { SidebarProvider } from '@/components/ui/sidebar'
 import type { Workspace } from '@/types'
 
 import NavProjectsUI from './nav-projects.ui'
@@ -27,13 +28,15 @@ describe('NavProjectsUI', () => {
 
   it('renders import/export buttons', () => {
     render(
-      <NavProjectsUI
-        currentWorkspace={workspace}
-        fileInputRef={fileInputRef}
-        exportZipHandler={exportZipHandler}
-        exportGistHandler={exportGistHandler}
-        importZipHandler={importZipHandler}
-      />
+      <SidebarProvider>
+        <NavProjectsUI
+          currentWorkspace={workspace}
+          fileInputRef={fileInputRef}
+          exportZipHandler={exportZipHandler}
+          exportGistHandler={exportGistHandler}
+          importZipHandler={importZipHandler}
+        />
+      </SidebarProvider>
     )
     expect(screen.getByText('Export ZIP')).toBeInTheDocument()
     expect(screen.getByText('Export Gist')).toBeInTheDocument()
@@ -42,13 +45,15 @@ describe('NavProjectsUI', () => {
 
   it('calls handlers on button click', () => {
     render(
-      <NavProjectsUI
-        currentWorkspace={workspace}
-        fileInputRef={fileInputRef}
-        exportZipHandler={exportZipHandler}
-        exportGistHandler={exportGistHandler}
-        importZipHandler={importZipHandler}
-      />
+      <SidebarProvider>
+        <NavProjectsUI
+          currentWorkspace={workspace}
+          fileInputRef={fileInputRef}
+          exportZipHandler={exportZipHandler}
+          exportGistHandler={exportGistHandler}
+          importZipHandler={importZipHandler}
+        />
+      </SidebarProvider>
     )
     fireEvent.click(screen.getByText('Export ZIP'))
     expect(exportZipHandler).toHaveBeenCalled()

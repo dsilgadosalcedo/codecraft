@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Preview > renders an iframe with the given code 1`] = `
+<div>
+  <iframe
+    class="w-full h-[calc(100vh-64px)] md:h-full rounded-xl"
+    srcdoc="<div>Hello World</div>"
+    title="Preview"
+  />
+</div>
+`;
