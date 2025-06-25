@@ -6,8 +6,8 @@ import { initialHtml, initialCss, initialJs } from "./utils/initialCode"
 
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar"
-import Editor from "@/components/editor"
-import Preview from "@/components/preview"
+import Editor from "@/features/editor/editor.container"
+import Preview from "@/features/preview/preview"
 import { Button } from "@/components/ui/button"
 import { Maximize2, Minimize2 } from "lucide-react"
 

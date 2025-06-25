@@ -67,3 +67,6 @@ export function useImportExport() {
     importZipHandler,
   }
 }
+
+// Expose the hook's return type for UI props
+export type ImportExportResult = ReturnType<typeof useImportExport>

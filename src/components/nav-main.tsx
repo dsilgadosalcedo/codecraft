@@ -18,7 +18,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import SettingsModal from "./settings-modal"
-import TemplateSelector from "./template-selector"
+import TemplateSelector from "@/features/templates/template-selector.container"
 import { useWorkspaceStore } from "../store/useWorkspaceStore"
 import RenameWorkspaceDialog from "./rename-workspace-dialog"
 import DeleteWorkspaceDialog from "./delete-workspace-dialog"

@@ -1,5 +1,5 @@
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
+import NavProjects from "@/features/projects/nav-projects.container"
 import {
   Sidebar,
   SidebarContent,

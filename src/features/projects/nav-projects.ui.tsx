@@ -1,5 +1,5 @@
+import React from "react"
 import { Download, Github, Upload } from "lucide-react"
-
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -7,22 +7,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useImportExport } from "@/features/projects/use-import-export"
-import React from "react"
+import type { ImportExportResult } from "./use-import-export"
 
-export function NavProjects() {
-  const {
-    currentWorkspace,
-    fileInputRef,
-    exportZipHandler,
-    exportGistHandler,
-    importZipHandler,
-  } = useImportExport()
-
+export default function NavProjectsUI({
+  currentWorkspace,
+  fileInputRef,
+  exportZipHandler,
+  exportGistHandler,
+  importZipHandler,
+}: ImportExportResult) {
   if (!currentWorkspace) return null
 
   return (
-    // group-data-[collapsible=icon]:hidden
     <SidebarGroup>
       <SidebarGroupLabel>Import / Export</SidebarGroupLabel>
       <SidebarMenu>
