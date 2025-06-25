@@ -1,30 +1,31 @@
-import { setupMonacoEnvironment } from "./utils/monacoSetup"
-import React, { useEffect, useState } from "react"
-import Split from "react-split-grid"
-import { useWorkspaceStore } from "./store/useWorkspaceStore"
-import { initialHtml, initialCss, initialJs } from "./utils/initialCode"
+import { Maximize2, Minimize2 } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import Split from 'react-split-grid'
 
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider } from "@/components/ui/sidebar"
-import Editor from "@/features/editor/editor.container"
-import Preview from "@/features/preview/preview"
-import { Button } from "@/components/ui/button"
-import { Maximize2, Minimize2 } from "lucide-react"
+import { AppSidebar } from '@/components/app-sidebar'
+import { Button } from '@/components/ui/button'
+import { SidebarProvider } from '@/components/ui/sidebar'
+import Editor from '@/features/editor/editor.container'
+import Preview from '@/features/preview/preview'
+
+import { useWorkspaceStore } from './store/useWorkspaceStore'
+import { initialCss, initialHtml, initialJs } from './utils/initialCode'
+import { setupMonacoEnvironment } from './utils/monacoSetup'
 
 function App() {
-  const workspaces = useWorkspaceStore((state) => state.workspaces)
+  const workspaces = useWorkspaceStore(state => state.workspaces)
   const currentWorkspaceId = useWorkspaceStore(
-    (state) => state.currentWorkspaceId
+    state => state.currentWorkspaceId
   )
   const updateWorkspaceFiles = useWorkspaceStore(
-    (state) => state.updateWorkspaceFiles
+    state => state.updateWorkspaceFiles
   )
   const currentWorkspace =
-    workspaces.find((w) => w.id === currentWorkspaceId) || workspaces[0]
+    workspaces.find(w => w.id === currentWorkspaceId) || workspaces[0]
   const html = currentWorkspace?.html ?? initialHtml
   const css = currentWorkspace?.css ?? initialCss
   const js = currentWorkspace?.js ?? initialJs
-  const [code, setCode] = useState("")
+  const [code, setCode] = useState('')
   const [maximized, setMaximized] = useState<string | null>(null)
 
   const setHtml = (value: string) => updateWorkspaceFiles({ html: value })
@@ -37,10 +38,10 @@ function App() {
 
   useEffect(() => {
     // Extract any <head> and <body> content from the template HTML
-    const raw = html || ""
+    const raw = html || ''
     const headMatch = raw.match(/<head[^>]*>([\s\S]*?)<\/head>/i)
     const bodyMatch = raw.match(/<body[^>]*>([\s\S]*?)<\/body>/i)
-    const injectedHead = headMatch ? headMatch[1] : ""
+    const injectedHead = headMatch ? headMatch[1] : ''
     const injectedBody = bodyMatch ? bodyMatch[1] : raw
 
     // Build the final document, preserving template head tags (e.g., CDNs)
@@ -75,27 +76,27 @@ function App() {
                 <Minimize2 size={16} />
               </Button>
             </div>
-            {maximized === "preview" ? (
+            {maximized === 'preview' ? (
               <Preview code={code} />
             ) : (
               <Editor
                 id={maximized}
                 language={
-                  maximized === "html"
-                    ? "html"
-                    : maximized === "css"
-                    ? "css"
-                    : "javascript"
+                  maximized === 'html'
+                    ? 'html'
+                    : maximized === 'css'
+                      ? 'css'
+                      : 'javascript'
                 }
                 value={
-                  maximized === "html" ? html : maximized === "css" ? css : js
+                  maximized === 'html' ? html : maximized === 'css' ? css : js
                 }
                 onChange={
-                  maximized === "html"
+                  maximized === 'html'
                     ? setHtml
-                    : maximized === "css"
-                    ? setCss
-                    : setJs
+                    : maximized === 'css'
+                      ? setCss
+                      : setJs
                 }
               />
             )}
@@ -120,7 +121,7 @@ function App() {
                   <Button
                     size="icon"
                     className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
-                    onClick={() => setMaximized("html")}
+                    onClick={() => setMaximized('html')}
                   >
                     <Maximize2 size={16} />
                   </Button>
@@ -135,7 +136,7 @@ function App() {
                   <Button
                     size="icon"
                     className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
-                    onClick={() => setMaximized("css")}
+                    onClick={() => setMaximized('css')}
                   >
                     <Maximize2 size={16} />
                   </Button>
@@ -150,7 +151,7 @@ function App() {
                   <Button
                     size="icon"
                     className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
-                    onClick={() => setMaximized("js")}
+                    onClick={() => setMaximized('js')}
                   >
                     <Maximize2 size={16} />
                   </Button>
@@ -160,18 +161,18 @@ function App() {
                   <Button
                     size="icon"
                     className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
-                    onClick={() => setMaximized("preview")}
+                    onClick={() => setMaximized('preview')}
                   >
                     <Maximize2 size={16} />
                   </Button>
                 </div>
                 <div
                   className="col-start-2 col-end-2 row-start-1 row-end-4 cursor-col-resize"
-                  {...getGutterProps("column", 1)}
+                  {...getGutterProps('column', 1)}
                 />
                 <div
                   className="col-start-1 col-end-4 row-start-2 row-end-2 cursor-row-resize"
-                  {...getGutterProps("row", 1)}
+                  {...getGutterProps('row', 1)}
                 />
               </div>
             )}

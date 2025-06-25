@@ -1,18 +1,29 @@
 import React from 'react'
-import { useWorkspaceStore } from '../store/useWorkspaceStore'
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { SidebarMenuButton } from '@/components/ui/sidebar'
+
+import { useWorkspaceStore } from '../store/useWorkspaceStore'
 
 export default function SwitchWorkspaceDropdown() {
   const workspaces = useWorkspaceStore(state => state.workspaces)
-  const currentWorkspaceId = useWorkspaceStore(state => state.currentWorkspaceId)
+  const currentWorkspaceId = useWorkspaceStore(
+    state => state.currentWorkspaceId
+  )
   const switchWorkspace = useWorkspaceStore(state => state.switchWorkspace)
   const currentWorkspace = workspaces.find(ws => ws.id === currentWorkspaceId)
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <SidebarMenuButton>{currentWorkspace?.name || 'Workspace'}</SidebarMenuButton>
+        <SidebarMenuButton>
+          {currentWorkspace?.name || 'Workspace'}
+        </SidebarMenuButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {workspaces.map(ws => (
@@ -23,4 +34,4 @@ export default function SwitchWorkspaceDropdown() {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-} 
+}

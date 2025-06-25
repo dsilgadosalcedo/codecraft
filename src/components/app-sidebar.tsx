@@ -1,5 +1,4 @@
-import { NavMain } from "@/components/nav-main"
-import NavProjects from "@/features/projects/nav-projects.container"
+import { NavMain } from '@/components/nav-main'
 import {
   Sidebar,
   SidebarContent,
@@ -9,9 +8,11 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { useWorkspaceStore } from "@/store/useWorkspaceStore"
-import ModeToggle from "./mode-toggle"
+} from '@/components/ui/sidebar'
+import NavProjects from '@/features/projects/nav-projects.container'
+import { useWorkspaceStore } from '@/store/useWorkspaceStore'
+
+import ModeToggle from './mode-toggle'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -45,10 +46,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 const WorkspaceName = () => {
   const currentWorkspaceId = useWorkspaceStore(
-    (state) => state.currentWorkspaceId
+    state => state.currentWorkspaceId
   )
-  const workspace = useWorkspaceStore((state) =>
-    state.workspaces.find((workspace) => workspace.id === currentWorkspaceId)
+  const workspace = useWorkspaceStore(state =>
+    state.workspaces.find(workspace => workspace.id === currentWorkspaceId)
   )
   const workspaceName = workspace?.name
 

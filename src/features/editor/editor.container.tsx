@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react"
-import * as monaco from "monaco-editor"
-import { emmetHTML, emmetCSS } from "emmet-monaco-es"
-import EditorUI from "./editor.ui"
-import { useAiCompletion } from "./use-ai-completion"
+import { emmetCSS, emmetHTML } from 'emmet-monaco-es'
+import * as monaco from 'monaco-editor'
+import React, { useEffect, useRef } from 'react'
+
+import EditorUI from './editor.ui'
+import { useAiCompletion } from './use-ai-completion'
 
 // Register Emmet support
 emmetHTML(monaco)
@@ -23,8 +24,8 @@ export default function EditorContainer({
 }: EditorContainerProps) {
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
 
-  // AI completion
-  useAiCompletion(editorRef.current, language)
+  // AI completion (hook returns getAiCompletion, isConfigured, etc.)
+  useAiCompletion()
 
   // Initialize Monaco editor
   useEffect(() => {
@@ -35,12 +36,12 @@ export default function EditorContainer({
         automaticLayout: true,
         fixedOverflowWidgets: true,
         language,
-        lineNumbers: "off",
+        lineNumbers: 'off',
         minimap: { enabled: false },
         padding: { top: 14 },
         scrollBeyondLastLine: false,
         tabSize: 2,
-        theme: "vs-dark",
+        theme: 'vs-dark',
         value,
       })
       editor.onDidChangeModelContent(() => {

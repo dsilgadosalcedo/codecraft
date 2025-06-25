@@ -1,5 +1,6 @@
-import React from "react"
-import EditorLogo from "@/components/editor-logo"
+import React from 'react'
+
+import EditorLogo from '@/components/editor-logo'
 
 export interface EditorUIProps {
   id: string
