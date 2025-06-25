@@ -107,9 +107,8 @@ function App() {
                     onChange={setHtml}
                   />
                   <Button
-                    variant="ghost"
                     size="icon"
-                    className="absolute top-2 right-2 z-10"
+                    className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
                     onClick={() => setMaximized("html")}
                   >
                     <Maximize2 size={16} />
@@ -123,9 +122,8 @@ function App() {
                     onChange={setCss}
                   />
                   <Button
-                    variant="ghost"
                     size="icon"
-                    className="absolute top-2 right-2 z-10"
+                    className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
                     onClick={() => setMaximized("css")}
                   >
                     <Maximize2 size={16} />
@@ -139,9 +137,8 @@ function App() {
                     onChange={setJs}
                   />
                   <Button
-                    variant="ghost"
                     size="icon"
-                    className="absolute top-2 right-2 z-10"
+                    className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
                     onClick={() => setMaximized("js")}
                   >
                     <Maximize2 size={16} />
@@ -150,9 +147,8 @@ function App() {
                 <div className="relative">
                   <Preview code={code} />
                   <Button
-                    variant="ghost"
                     size="icon"
-                    className="absolute top-2 right-2 z-10"
+                    className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
                     onClick={() => setMaximized("preview")}
                   >
                     <Maximize2 size={16} />
