@@ -14,13 +14,15 @@ import { SidebarMenuButton } from "@/components/ui/sidebar"
 import { useWorkspaceStore } from "../store/useWorkspaceStore"
 import {
   FileText,
-  Globe,
-  BookOpen,
   Code,
   Sparkles,
   Plus,
   FolderOpen,
   X,
+  Zap,
+  PenTool,
+  Palette,
+  Layout,
 } from "lucide-react"
 
 interface Template {
@@ -36,7 +38,7 @@ const builtInTemplates: Template[] = [
     name: "Landing Page",
     description:
       "Simple landing page layout with modern design and responsive components",
-    icon: <Globe className="h-6 w-6" />,
+    icon: <Layout className="h-6 w-6" />,
     category: "Web",
     files: {
       html: `<!DOCTYPE html>
@@ -134,7 +136,7 @@ nav a {
     name: "Blog Post",
     description:
       "Clean blog post layout with typography and reading experience focus",
-    icon: <BookOpen className="h-6 w-6" />,
+    icon: <PenTool className="h-6 w-6" />,
     category: "Content",
     files: {
       html: `<!DOCTYPE html>
@@ -226,7 +228,7 @@ document.querySelector('.post-meta').appendChild(readingTimeElement);`,
     name: "Vue Starter",
     description:
       "Vue.js application starter template with reactive components and modern styling",
-    icon: <Code className="h-6 w-6" />,
+    icon: <Zap className="h-6 w-6" />,
     category: "Framework",
     files: {
       html: `<!DOCTYPE html>
@@ -447,7 +449,7 @@ createApp({
   {
     name: "Tailwind Starter",
     description: "Starter template with Tailwind CSS via CDN",
-    icon: <Sparkles className="h-6 w-6" />,
+    icon: <Palette className="h-6 w-6" />,
     category: "CSS",
     files: {
       html: `<!DOCTYPE html>
