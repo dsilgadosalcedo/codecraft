@@ -20,6 +20,8 @@ import {
 import SettingsModal from "./settings-modal"
 import TemplateSelector from "./template-selector"
 import { useWorkspaceStore } from "../store/useWorkspaceStore"
+import RenameWorkspaceDialog from "./rename-workspace-dialog"
+import DeleteWorkspaceDialog from "./delete-workspace-dialog"
 
 export function NavMain() {
   const createWorkspace = useWorkspaceStore((state) => state.createWorkspace)
@@ -45,7 +47,10 @@ export function NavMain() {
             <CollapsibleContent>
               <SidebarMenuSub>
                 {workspaces.map((ws) => (
-                  <SidebarMenuSubItem key={ws.id}>
+                  <SidebarMenuSubItem
+                    key={ws.id}
+                    className="flex items-center justify-between"
+                  >
                     <SidebarMenuSubButton
                       isActive={ws.id === currentWorkspaceId}
                       onClick={() => switchWorkspace(ws.id)}
@@ -58,6 +63,10 @@ export function NavMain() {
                       )}
                       <span className="truncate">{ws.name}</span>
                     </SidebarMenuSubButton>
+                    <div className="flex items-center gap-1">
+                      <RenameWorkspaceDialog workspace={ws} />
+                      <DeleteWorkspaceDialog workspace={ws} />
+                    </div>
                   </SidebarMenuSubItem>
                 ))}
               </SidebarMenuSub>
