@@ -1,10 +1,10 @@
 import { LayoutTemplate } from 'lucide-react' // Add an icon from lucide-react
-import React from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -36,6 +36,9 @@ export default function TemplateSelectorUI({
       <DialogContent className="max-w-4xl w-full max-h-[80vh] overflow-hidden">
         <DialogHeader>
           <DialogTitle>Select Template</DialogTitle>
+          <DialogDescription className="sr-only">
+            Select a template to start
+          </DialogDescription>
         </DialogHeader>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto pr-2">

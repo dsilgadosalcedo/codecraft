@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest'
 
 import { exportGist } from './gist'
 
@@ -13,7 +13,7 @@ describe('exportGist', () => {
 
   it('calls fetch and returns html_url', async () => {
     const fakeData = { html_url: 'url' }
-    ;(fetch as any).mockResolvedValueOnce({
+    ;(fetch as unknown as Mock).mockResolvedValueOnce({
       ok: true,
       json: () => Promise.resolve(fakeData),
     })
@@ -41,7 +41,7 @@ describe('exportGist', () => {
   })
 
   it('throws error when html_url missing', async () => {
-    ;(fetch as any).mockResolvedValueOnce({
+    ;(fetch as unknown as Mock).mockResolvedValueOnce({
       ok: true,
       json: () => Promise.resolve({}),
     })

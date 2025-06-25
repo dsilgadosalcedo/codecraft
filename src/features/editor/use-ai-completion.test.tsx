@@ -1,3 +1,4 @@
+// eslint-disable @typescript-eslint/no-explicit-any
 import { render } from '@testing-library/react'
 import React from 'react'
 import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest'
@@ -6,8 +7,11 @@ import { useAiStore } from '@/store/useAiStore'
 
 import { useAiCompletion } from './use-ai-completion'
 
+// Define the correct API type based on the hook
+type Api = ReturnType<typeof useAiCompletion>
+
 // Helper component to capture hook return value
-function Capture({ callback }: { callback: (api: any) => void }) {
+function Capture({ callback }: { callback: (api: Api) => void }) {
   callback(useAiCompletion())
   return null
 }
@@ -21,7 +25,7 @@ describe('useAiCompletion hook', () => {
   })
 
   it('returns error when API key is not configured', async () => {
-    let api: any
+    let api!: Api
     render(
       <Capture
         callback={c => {
@@ -41,7 +45,7 @@ describe('useAiCompletion hook', () => {
       ok: true,
       json: () => Promise.resolve(fakeResponse),
     })
-    let api: any
+    let api!: Api
     render(
       <Capture
         callback={c => {
@@ -64,7 +68,7 @@ describe('useAiCompletion hook', () => {
       ok: true,
       json: () => Promise.resolve(fakeResponse),
     })
-    let api: any
+    let api!: Api
     render(
       <Capture
         callback={c => {
