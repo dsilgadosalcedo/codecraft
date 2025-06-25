@@ -10,8 +10,8 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import ModeToggle from "./mode-toggle"
 import { useWorkspaceStore } from "@/store/useWorkspaceStore"
+import ModeToggle from "./mode-toggle"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (

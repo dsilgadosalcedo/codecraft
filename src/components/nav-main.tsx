@@ -65,7 +65,9 @@ export function NavMain() {
                     </SidebarMenuSubButton>
                     <div className="flex items-center gap-1">
                       <RenameWorkspaceDialog workspace={ws} />
-                      <DeleteWorkspaceDialog workspace={ws} />
+                      {workspaces.length > 1 && (
+                        <DeleteWorkspaceDialog workspace={ws} />
+                      )}
                     </div>
                   </SidebarMenuSubItem>
                 ))}
