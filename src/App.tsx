@@ -1,16 +1,17 @@
 import { Maximize2, Minimize2 } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 import Split from 'react-split-grid'
 
 import { AppSidebar } from '@/components/app-sidebar'
 import { Button } from '@/components/ui/button'
 import { SidebarProvider } from '@/components/ui/sidebar'
-import Editor from '@/features/editor/editor.container'
 import Preview from '@/features/preview/preview'
 
 import { useWorkspaceStore } from './store/useWorkspaceStore'
 import { initialCss, initialHtml, initialJs } from './utils/initialCode'
-import { setupMonacoEnvironment } from './utils/monacoSetup'
+
+// Dynamically import Editor container for code splitting
+const Editor = lazy(() => import('@/features/editor/editor.container'))
 
 function App() {
   const workspaces = useWorkspaceStore(state => state.workspaces)
@@ -31,10 +32,6 @@ function App() {
   const setHtml = (value: string) => updateWorkspaceFiles({ html: value })
   const setCss = (value: string) => updateWorkspaceFiles({ css: value })
   const setJs = (value: string) => updateWorkspaceFiles({ js: value })
-
-  useEffect(() => {
-    setupMonacoEnvironment()
-  }, [])
 
   useEffect(() => {
     // Extract any <head> and <body> content from the template HTML
@@ -79,26 +76,28 @@ function App() {
             {maximized === 'preview' ? (
               <Preview code={code} />
             ) : (
-              <Editor
-                id={maximized}
-                language={
-                  maximized === 'html'
-                    ? 'html'
-                    : maximized === 'css'
-                      ? 'css'
-                      : 'javascript'
-                }
-                value={
-                  maximized === 'html' ? html : maximized === 'css' ? css : js
-                }
-                onChange={
-                  maximized === 'html'
-                    ? setHtml
-                    : maximized === 'css'
-                      ? setCss
-                      : setJs
-                }
-              />
+              <Suspense fallback={<div>Loading editor...</div>}>
+                <Editor
+                  id={maximized}
+                  language={
+                    maximized === 'html'
+                      ? 'html'
+                      : maximized === 'css'
+                        ? 'css'
+                        : 'javascript'
+                  }
+                  value={
+                    maximized === 'html' ? html : maximized === 'css' ? css : js
+                  }
+                  onChange={
+                    maximized === 'html'
+                      ? setHtml
+                      : maximized === 'css'
+                        ? setCss
+                        : setJs
+                  }
+                />
+              </Suspense>
             )}
           </div>
         ) : (
@@ -112,12 +111,14 @@ function App() {
                 {...getGridProps()}
               >
                 <div className="relative">
-                  <Editor
-                    id="html"
-                    language="html"
-                    value={html}
-                    onChange={setHtml}
-                  />
+                  <Suspense fallback={<div>Loading editor...</div>}>
+                    <Editor
+                      id="html"
+                      language="html"
+                      value={html}
+                      onChange={setHtml}
+                    />
+                  </Suspense>
                   <Button
                     size="icon"
                     className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
@@ -127,12 +128,14 @@ function App() {
                   </Button>
                 </div>
                 <div className="relative">
-                  <Editor
-                    id="css"
-                    language="css"
-                    value={css}
-                    onChange={setCss}
-                  />
+                  <Suspense fallback={<div>Loading editor...</div>}>
+                    <Editor
+                      id="css"
+                      language="css"
+                      value={css}
+                      onChange={setCss}
+                    />
+                  </Suspense>
                   <Button
                     size="icon"
                     className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
@@ -142,12 +145,14 @@ function App() {
                   </Button>
                 </div>
                 <div className="relative">
-                  <Editor
-                    id="js"
-                    language="javascript"
-                    value={js}
-                    onChange={setJs}
-                  />
+                  <Suspense fallback={<div>Loading editor...</div>}>
+                    <Editor
+                      id="js"
+                      language="javascript"
+                      value={js}
+                      onChange={setJs}
+                    />
+                  </Suspense>
                   <Button
                     size="icon"
                     className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
