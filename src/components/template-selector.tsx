@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import {
   Dialog,
   DialogTrigger,
@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { SidebarMenuButton } from "@/components/ui/sidebar"
 import { useWorkspaceStore } from "../store/useWorkspaceStore"
+import { useCustomTemplates } from "@/features/templates/use-custom-templates"
 import {
   FileText,
   Code,
@@ -473,38 +474,15 @@ createApp({
   },
 ]
 
+export { builtInTemplates }
+
 export default function TemplateSelector() {
   const createWorkspace = useWorkspaceStore((state) => state.createWorkspace)
   const updateWorkspaceFiles = useWorkspaceStore(
     (state) => state.updateWorkspaceFiles
   )
-  const [customTemplates, setCustomTemplates] = useState<Template[]>([])
   const [isOpen, setIsOpen] = useState(false)
-
-  useEffect(() => {
-    const stored = localStorage.getItem("customTemplates")
-    if (stored) setCustomTemplates(JSON.parse(stored))
-  }, [])
-
-  const saveCustomTemplate = () => {
-    const name = prompt("Template name:")
-    if (!name) return
-    const state = useWorkspaceStore.getState()
-    const current = state.workspaces.find(
-      (ws) => ws.id === state.currentWorkspaceId
-    )
-    if (!current) return
-    const newTemplate: Template = {
-      name,
-      description: "Custom template saved from workspace",
-      icon: <Sparkles className="h-6 w-6" />,
-      category: "Custom",
-      files: { html: current.html, css: current.css, js: current.js },
-    }
-    const updated = [...customTemplates, newTemplate]
-    setCustomTemplates(updated)
-    localStorage.setItem("customTemplates", JSON.stringify(updated))
-  }
+  const { customTemplates, saveCustomTemplate } = useCustomTemplates()
 
   const useTemplate = (template: Template) => {
     createWorkspace(template.name)

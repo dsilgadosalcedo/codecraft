@@ -18,8 +18,10 @@ import { Bot } from "lucide-react"
 export default function SettingsModal() {
   const apiKey = useAiStore((state) => state.apiKey)
   const model = useAiStore((state) => state.model)
+  const provider = useAiStore((state) => state.provider)
   const setApiKey = useAiStore((state) => state.setApiKey)
   const setModel = useAiStore((state) => state.setModel)
+  const setProvider = useAiStore((state) => state.setProvider)
 
   return (
     <Dialog>
@@ -53,6 +55,19 @@ export default function SettingsModal() {
               onChange={(e) => setModel(e.target.value)}
               placeholder="gpt-3.5-turbo"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Provider</label>
+            <select
+              value={provider}
+              onChange={(e) =>
+                setProvider(e.target.value as "openai" | "gemini")
+              }
+              className="block w-full rounded border px-2 py-1"
+            >
+              <option value="openai">OpenAI</option>
+              <option value="gemini">Gemini</option>
+            </select>
           </div>
         </div>
         <DialogFooter>
