@@ -14,7 +14,7 @@ This document outlines a structured plan to refactor and improve code quality ac
 
 - Adopt a feature-driven folder layout.
 - Extract side effects (fetch, ZIP, Gist, localStorage) into custom hooks or service modules.
-- Split each feature into “container” (logic + state) and “UI” (pure JSX) components.
+- Split each feature into "container" (logic + state) and "UI" (pure JSX) components.
 - Migrate all `.jsx` to `.tsx` with explicit TypeScript types.
 - Reduce individual files to < 200 LOC whenever possible.
 - Enable isolated unit testing for hooks and logic.
@@ -79,7 +79,7 @@ src/
 
 ### Phase B: Adopt Feature Folders & Rename (1–2 days)
 
-- Relocate each feature’s containers, UIs, and hooks into `src/features/<feature>/…`.
+- Relocate each feature's containers, UIs, and hooks into `src/features/<feature>/…`.
 - Rename existing `.jsx` files to `.tsx` and define prop interfaces.
 - Update import paths to reflect the new structure.
 
@@ -100,10 +100,31 @@ src/
 - Introduce Storybook for isolated component previews (all `components/ui` and feature UIs).
 - Add end-to-end integration tests (e.g., workspace CRUD flows).
 - Continuously refactor remaining mixed UI/logic code into hooks and services.
+- Establish a living component library with **Storybook**:
+  - Document all shared and feature UI components with interactive controls and example usage.
+  - Auto-generate design tokens and style guides from component props.
+- Integrate **End-to-End** testing (Cypress or Playwright):
+  - Cover critical user flows (workspace CRUD, template selection, import/export).
+  - Run in CI to catch regressions across browsers.
+- Enforce **Performance Budgets** & Automated Audits:
+  - Use Lighthouse CI or Vite plugins to set size and TTI budgets.
+  - Fail builds if bundle or metric thresholds regress.
+- Add **Accessibility** checks:
+  - Integrate axe-core or Pa11y in CI pipeline.
+  - Enforce ARIA attributes, color contrast, and keyboard navigation.
+- Generate **API Documentation** with TypeDoc:
+  - Publish docs for hooks, services, and shared types.
+- Introduce **Monitoring & Observability**:
+  - Collect real-user Web Vitals (e.g., via `web-vitals`).
+  - Integrate error & performance tracking (Sentry, LogRocket).
+- Ongoing **Maintenance & Refactoring**:
+  - Continually extract any remaining mixed UI/logic into hooks/services.
+  - Remove dead code and outdated dependencies.
+  - Keep individual files under 200 LOC and feature modules self-contained.
 
 ## 5. Expected Outcomes
 
-- Clear “container” vs. “presentation” separation, improving readability and maintainability.
+- Clear "container" vs. "presentation" separation, improving readability and maintainability.
 - Feature-scoped directories for faster onboarding and easier scaling.
 - Smaller, more focused files (< 200 LOC) that are easier to review.
 - Strongly-typed, testable hooks and services with robust unit coverage.
