@@ -17,7 +17,7 @@
     "type-check": "tsc --noEmit",
     "preview": "vite preview",
     "quality": "pnpm type-check && pnpm lint && pnpm format:check && pnpm test:run",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
