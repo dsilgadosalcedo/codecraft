@@ -11,6 +11,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import ModeToggle from "./mode-toggle"
+import { useWorkspaceStore } from "@/store/useWorkspaceStore"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -19,9 +20,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center justify-between bg-background rounded-lg p-2 group-data-[collapsible=icon]:p-0">
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-medium group-data-[collapsible=icon]:hidden">
-                Codecraft
-              </span>
+              <WorkspaceName />
               {/* <span className="truncate text-xs">Manage your work spaces</span> */}
             </div>
             <SidebarTrigger />
@@ -41,5 +40,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
+  )
+}
+
+const WorkspaceName = () => {
+  const currentWorkspaceId = useWorkspaceStore(
+    (state) => state.currentWorkspaceId
+  )
+  const workspace = useWorkspaceStore((state) =>
+    state.workspaces.find((workspace) => workspace.id === currentWorkspaceId)
+  )
+  const workspaceName = workspace?.name
+
+  return (
+    <span className="truncate font-medium group-data-[collapsible=icon]:hidden">
+      {workspaceName}
+    </span>
   )
 }
