@@ -1,16 +1,5 @@
-import { useWorkspaceStore, Workspace } from "@/store/useWorkspaceStore"
-
-export interface UseWorkspacesResult {
-  workspaces: Workspace[]
-  currentWorkspaceId: string
-  createWorkspace: (name?: string) => void
-  switchWorkspace: (id: string) => void
-  renameWorkspace: (id: string, name: string) => void
-  deleteWorkspace: (id: string) => void
-  updateWorkspaceFiles: (
-    data: Partial<{ html: string; css: string; js: string }>
-  ) => void
-}
+import { useWorkspaceStore } from "@/store/useWorkspaceStore"
+import type { UseWorkspacesResult } from "@/types"
 
 export function useWorkspaces(): UseWorkspacesResult {
   const workspaces = useWorkspaceStore((state) => state.workspaces)
@@ -25,9 +14,12 @@ export function useWorkspaces(): UseWorkspacesResult {
     (state) => state.updateWorkspaceFiles
   )
 
+  const currentWorkspace = workspaces.find((w) => w.id === currentWorkspaceId)
+
   return {
     workspaces,
     currentWorkspaceId,
+    currentWorkspace,
     createWorkspace,
     switchWorkspace,
     renameWorkspace,

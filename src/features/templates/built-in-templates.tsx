@@ -1,8 +1,6 @@
 import React from "react"
 import { Layout, PenTool, Zap } from "lucide-react"
-import type { CustomTemplate } from "./use-custom-templates"
-
-export type Template = CustomTemplate
+import type { Template } from "@/types"
 
 export const builtInTemplates: Template[] = [
   {
@@ -10,6 +8,7 @@ export const builtInTemplates: Template[] = [
     description: "Basic Tailwind CSS setup with utility classes",
     icon: <Layout className="h-6 w-6" />,
     category: "CSS",
+    isCustom: false,
     files: {
       html: `<!DOCTYPE html>
 <html lang="en">
@@ -44,6 +43,7 @@ document.querySelector('button').addEventListener('click', () => {
     description: "Basic React setup with functional components and hooks",
     icon: <PenTool className="h-6 w-6" />,
     category: "Framework",
+    isCustom: false,
     files: {
       html: `<!DOCTYPE html>
 <html lang="en">
@@ -112,6 +112,7 @@ console.log('React app loaded!');
     description: "Basic Vue.js setup with reactive data and methods",
     icon: <Zap className="h-6 w-6" />,
     category: "Framework",
+    isCustom: false,
     files: {
       html: `<!DOCTYPE html>
 <html lang="en">

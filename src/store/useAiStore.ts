@@ -1,16 +1,14 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
+import type { AiProvider, AiSettings } from "@/types"
 
 // Default to Gemini key from .env
 const defaultGeminiApiKey = import.meta.env.VITE_GEMINI_API_KEY ?? ""
 
-interface AiStore {
-  apiKey: string
-  model: string
-  provider: "openai" | "gemini"
+interface AiStore extends AiSettings {
   setApiKey: (key: string) => void
   setModel: (model: string) => void
-  setProvider: (provider: "openai" | "gemini") => void
+  setProvider: (provider: AiProvider) => void
 }
 
 export const useAiStore = create<AiStore>()(
@@ -19,15 +17,13 @@ export const useAiStore = create<AiStore>()(
       // Use default Gemini key and model/provider
       apiKey: defaultGeminiApiKey,
       model: "gemini-2.5-flash",
-      provider: "gemini",
+      provider: "gemini" as AiProvider,
       setApiKey: (key: string) => set({ apiKey: key }),
       setModel: (model: string) => set({ model }),
-      setProvider: (provider) => set({ provider }),
+      setProvider: (provider: AiProvider) => set({ provider }),
     }),
     {
       name: "ai-settings",
-      serialize: (state: AiStore) => btoa(JSON.stringify(state)),
-      deserialize: (str: string) => JSON.parse(atob(str)) as AiStore,
-    } as any // eslint-disable-line @typescript-eslint/no-explicit-any
+    }
   )
 )

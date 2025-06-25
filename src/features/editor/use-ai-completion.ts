@@ -1,103 +1,108 @@
-import { useEffect } from "react"
-import * as monaco from "monaco-editor"
 import { useAiStore } from "@/store/useAiStore"
+import type {
+  AiCompletionRequest,
+  AiCompletionResponse,
+  OpenAIResponse,
+  GeminiResponse,
+} from "@/types"
 
-export function useAiCompletion(
-  editorInstance: monaco.editor.IStandaloneCodeEditor | null,
-  language: string
-) {
-  const apiKey = useAiStore((state) => state.apiKey)
-  const model = useAiStore((state) => state.model)
-  const provider = useAiStore((state) => state.provider)
+export function useAiCompletion() {
+  const { apiKey, model, provider } = useAiStore()
 
-  useEffect(() => {
-    if (!editorInstance) return
+  const getAiCompletion = async (
+    text: string,
+    language: string
+  ): Promise<AiCompletionResponse> => {
+    if (!apiKey) {
+      return { suggestions: [], error: "API key not configured" }
+    }
 
-    let debounceTimer: ReturnType<typeof setTimeout> | null = null
-    let pendingResolvers: Array<
-      (result: monaco.languages.CompletionList) => void
-    > = []
-
-    const disposable = monaco.languages.registerCompletionItemProvider(
+    const request: AiCompletionRequest = {
+      text,
       language,
+      model,
+      provider,
+    }
+
+    try {
+      if (provider === "openai") {
+        return await getOpenAICompletion(request)
+      } else {
+        return await getGeminiCompletion(request)
+      }
+    } catch (error) {
+      console.error("AI completion error:", error)
+      return {
+        suggestions: [],
+        error: error instanceof Error ? error.message : "Unknown error",
+      }
+    }
+  }
+
+  const getOpenAICompletion = async (
+    request: AiCompletionRequest
+  ): Promise<AiCompletionResponse> => {
+    const response = await fetch("https://api.openai.com/v1/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: request.model,
+        prompt: `Complete this ${request.language} code:\n${request.text}`,
+        max_tokens: 50,
+        temperature: 0.3,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`OpenAI API error: ${response.statusText}`)
+    }
+
+    const data: OpenAIResponse = await response.json()
+    const suggestions =
+      data.choices?.map((choice) => choice.text || "").filter(Boolean) || []
+
+    return { suggestions }
+  }
+
+  const getGeminiCompletion = async (
+    request: AiCompletionRequest
+  ): Promise<AiCompletionResponse> => {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${request.model}:generateContent?key=${apiKey}`,
       {
-        triggerCharacters: [".", "<"],
-        provideCompletionItems: (modelInstance, position) => {
-          if (!apiKey) {
-            return { suggestions: [] }
-          }
-          const text = modelInstance.getValueInRange({
-            startLineNumber: 1,
-            startColumn: 1,
-            endLineNumber: position.lineNumber,
-            endColumn: position.column,
-          })
-          return new Promise<monaco.languages.CompletionList>((resolve) => {
-            pendingResolvers.push(resolve)
-            if (debounceTimer) {
-              clearTimeout(debounceTimer)
-            }
-            debounceTimer = setTimeout(async () => {
-              debounceTimer = null
-              try {
-                let suggestionText = ""
-                if (provider === "openai") {
-                  const response = await fetch(
-                    "https://api.openai.com/v1/completions",
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${apiKey}`,
-                      },
-                      body: JSON.stringify({
-                        model,
-                        prompt: text,
-                        max_tokens: 50,
-                      }),
-                    }
-                  )
-                  const data = await response.json()
-                  suggestionText = data.choices?.[0]?.text?.trim() || ""
-                } else if (provider === "gemini") {
-                  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`
-                  const response = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      contents: [{ parts: [{ text }] }],
-                    }),
-                  })
-                  const data = await response.json()
-                  suggestionText =
-                    data.candidates?.[0]?.output?.trim() ||
-                    data.text?.trim() ||
-                    ""
-                }
-                const suggestions = [
-                  {
-                    label: suggestionText.split("\n")[0],
-                    kind: monaco.languages.CompletionItemKind.Snippet,
-                    insertText: suggestionText,
-                    range: {
-                      startLineNumber: position.lineNumber,
-                      startColumn: 1,
-                      endLineNumber: position.lineNumber,
-                      endColumn: position.column,
-                    },
-                  },
-                ]
-                pendingResolvers.forEach((r) => r({ suggestions }))
-              } catch {
-                pendingResolvers.forEach((r) => r({ suggestions: [] }))
-              }
-              pendingResolvers = []
-            }, 300)
-          })
-        },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                {
+                  text: `Complete this ${request.language} code concisely:\n${request.text}`,
+                },
+              ],
+            },
+          ],
+        }),
       }
     )
 
-    return () => disposable.dispose()
-  }, [editorInstance, language, apiKey, model, provider])
+    if (!response.ok) {
+      throw new Error(`Gemini API error: ${response.statusText}`)
+    }
+
+    const data: GeminiResponse = await response.json()
+    const suggestion = data.candidates?.[0]?.output || data.text || ""
+
+    return { suggestions: suggestion ? [suggestion] : [] }
+  }
+
+  return {
+    getAiCompletion,
+    isConfigured: !!apiKey,
+    provider,
+    model,
+  }
 }

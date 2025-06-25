@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useWorkspaceStore } from "@/store/useWorkspaceStore"
+import type { Template, UseCustomTemplatesResult } from "@/types"
 
-export interface TemplateFiles {
-  html: string
-  css: string
-  js: string
-}
-
-export interface CustomTemplate {
-  name: string
-  description?: string
-  files: TemplateFiles
-  icon?: React.ReactNode
-  category?: string
-}
-
-export function useCustomTemplates() {
-  const [customTemplates, setCustomTemplates] = useState<CustomTemplate[]>([])
+export function useCustomTemplates(): UseCustomTemplatesResult {
+  const [customTemplates, setCustomTemplates] = useState<Template[]>([])
 
   useEffect(() => {
     const stored = localStorage.getItem("customTemplates")
@@ -37,15 +24,23 @@ export function useCustomTemplates() {
       (ws) => ws.id === state.currentWorkspaceId
     )
     if (!current) return
-    const newTemplate: CustomTemplate = {
+
+    const newTemplate: Template = {
       name,
       description: "Custom template saved from workspace",
       files: { html: current.html, css: current.css, js: current.js },
+      isCustom: true,
     }
     const updated = [...customTemplates, newTemplate]
     setCustomTemplates(updated)
     localStorage.setItem("customTemplates", JSON.stringify(updated))
   }
 
-  return { customTemplates, saveCustomTemplate }
+  const deleteCustomTemplate = (name: string) => {
+    const updated = customTemplates.filter((t) => t.name !== name)
+    setCustomTemplates(updated)
+    localStorage.setItem("customTemplates", JSON.stringify(updated))
+  }
+
+  return { customTemplates, saveCustomTemplate, deleteCustomTemplate }
 }
