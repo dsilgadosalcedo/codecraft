@@ -1,5 +1,6 @@
 import React, { StrictMode } from "react"
 import ReactDOM from "react-dom/client"
+import { ThemeProvider } from "next-themes"
 import {
   Outlet,
   RouterProvider,
@@ -7,17 +8,21 @@ import {
   createRoute,
   createRouter,
 } from "@tanstack/react-router"
+import App from "./App.jsx"
 import "./styles.css"
 import reportWebVitals from "./reportWebVitals.js"
 
-import App from "./App.jsx"
-
 const rootRoute = createRootRoute({
   component: () => (
-    <>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="dark"
+      enableSystem
+      disableTransitionOnChange
+    >
       <Outlet />
       {/* <TanStackRouterDevtools /> */}
-    </>
+    </ThemeProvider>
   ),
 })
 

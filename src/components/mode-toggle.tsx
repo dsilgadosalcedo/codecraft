@@ -1,4 +1,5 @@
 import React from "react"
+import { useTheme } from "next-themes"
 import { Sun, Moon } from "lucide-react"
 import {
   DropdownMenu,
@@ -6,11 +7,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
-import useTheme from "@/hooks/useTheme"
 import { SidebarMenuButton } from "./ui/sidebar"
 
 export default function ModeToggle() {
-  const [theme, setTheme] = useTheme()
+  const { setTheme } = useTheme()
 
   return (
     <DropdownMenu>
