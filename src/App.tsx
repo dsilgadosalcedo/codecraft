@@ -2,6 +2,7 @@ import { setupMonacoEnvironment } from "./utils/monacoSetup"
 import React, { useEffect, useState } from "react"
 import Split from "react-split-grid"
 import { useWorkspaceStore } from "./store/useWorkspaceStore"
+import { initialHtml, initialCss, initialJs } from "./utils/initialCode"
 
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar"
@@ -20,7 +21,9 @@ function App() {
   )
   const currentWorkspace =
     workspaces.find((w) => w.id === currentWorkspaceId) || workspaces[0]
-  const { html, css, js } = currentWorkspace
+  const html = currentWorkspace?.html ?? initialHtml
+  const css = currentWorkspace?.css ?? initialCss
+  const js = currentWorkspace?.js ?? initialJs
   const [code, setCode] = useState("")
   const [maximized, setMaximized] = useState<string | null>(null)
 

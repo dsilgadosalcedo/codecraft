@@ -1,5 +1,5 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
 interface AiStore {
   apiKey: string
@@ -11,13 +11,15 @@ interface AiStore {
 export const useAiStore = create<AiStore>()(
   persist(
     (set) => ({
-      apiKey: '',
-      model: 'gpt-3.5-turbo',
+      apiKey: "",
+      model: "gpt-3.5-turbo",
       setApiKey: (key: string) => set({ apiKey: key }),
       setModel: (model: string) => set({ model }),
     }),
     {
-      name: 'ai-settings',
-    }
+      name: "ai-settings",
+      serialize: (state: AiStore) => btoa(JSON.stringify(state)),
+      deserialize: (str: string) => JSON.parse(atob(str)) as AiStore,
+    } as any // eslint-disable-line @typescript-eslint/no-explicit-any
   )
-) 
+)
