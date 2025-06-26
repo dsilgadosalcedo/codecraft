@@ -1,5 +1,4 @@
 import { emmetCSS, emmetHTML } from 'emmet-monaco-es'
-import { RotateCw as FormatIcon } from 'lucide-react'
 import * as monaco from 'monaco-editor'
 import parserBabel from 'prettier/plugins/babel.mjs'
 import parserEstree from 'prettier/plugins/estree.mjs'
@@ -113,8 +112,8 @@ export default function EditorContainer({
   return (
     <div className="relative h-full">
       <div className="absolute top-2 right-12 z-10 flex gap-1 opacity-50 hover:opacity-100">
-        <Button size="icon" onClick={formatCode} title="Format code">
-          <FormatIcon className="h-4 w-4" />
+        <Button size="sm" onClick={formatCode} title="Format code">
+          Format
         </Button>
       </div>
       <EditorUI id={id} />

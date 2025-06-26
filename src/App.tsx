@@ -105,7 +105,7 @@ function App() {
               <Button
                 size="icon"
                 onClick={() => setMaximized(null)}
-                className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
+                className="size-8 absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
               >
                 <Minimize2 size={16} />
               </Button>
@@ -160,7 +160,7 @@ function App() {
                   </Suspense>
                   <Button
                     size="icon"
-                    className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
+                    className="size-8 absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
                     onClick={() => setMaximized('html')}
                   >
                     <Maximize2 size={16} />
@@ -178,7 +178,7 @@ function App() {
                   </Suspense>
                   <Button
                     size="icon"
-                    className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
+                    className="size-8 absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
                     onClick={() => setMaximized('css')}
                   >
                     <Maximize2 size={16} />
@@ -196,7 +196,7 @@ function App() {
                   </Suspense>
                   <Button
                     size="icon"
-                    className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
+                    className="size-8 absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
                     onClick={() => setMaximized('js')}
                   >
                     <Maximize2 size={16} />
@@ -206,7 +206,7 @@ function App() {
                   <Preview code={code} />
                   <Button
                     size="icon"
-                    className="absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
+                    className="size-8 absolute top-2 right-2 z-10 opacity-50 hover:opacity-100"
                     onClick={() => setMaximized('preview')}
                   >
                     <Maximize2 size={16} />
