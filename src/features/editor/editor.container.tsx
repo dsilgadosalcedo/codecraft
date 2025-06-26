@@ -10,7 +10,6 @@ import React, { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 
 import EditorUI from './editor.ui'
-import { useAiCompletion } from './use-ai-completion'
 
 // Register Emmet support
 emmetHTML(monaco)
@@ -32,9 +31,6 @@ export default function EditorContainer({
   readOnly = false,
 }: EditorContainerProps) {
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
-
-  // AI completion
-  useAiCompletion()
 
   // Initialize Monaco editor
   useEffect(() => {
