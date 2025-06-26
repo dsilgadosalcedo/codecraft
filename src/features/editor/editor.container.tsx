@@ -46,6 +46,8 @@ export default function EditorContainer({
         fixedOverflowWidgets: true,
         matchBrackets: 'always',
         folding: true,
+        showFoldingControls: 'always',
+        foldingStrategy: 'auto',
         language,
         lineNumbers: 'off',
         minimap: { enabled: false },
