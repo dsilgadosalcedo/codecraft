@@ -1,7 +1,6 @@
 import { Download, Github, Upload } from 'lucide-react'
 import React from 'react'
 
-import ShareDialog from '@/components/share-dialog'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -9,6 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+import ShareDialog from '@/features/workspace/share-dialog'
 
 import type { ImportExportResult } from './use-import-export'
 

@@ -6,12 +6,14 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { SidebarMenuButton } from '@/components/ui/sidebar'
+import { utf8ToBase64 } from '@/lib/utils'
 
 interface ShareDialogProps {
   currentWorkspace: {
@@ -20,15 +22,6 @@ interface ShareDialogProps {
     css: string
     js: string
   }
-}
-
-// Helper to base64-encode Unicode strings
-function utf8ToBase64(str: string): string {
-  return btoa(
-    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) =>
-      String.fromCharCode(parseInt(p1, 16))
-    )
-  )
 }
 
 export default function ShareDialog({ currentWorkspace }: ShareDialogProps) {
@@ -59,6 +52,9 @@ export default function ShareDialog({ currentWorkspace }: ShareDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Share Workspace</DialogTitle>
+          <DialogDescription>
+            Copy this link to share your workspace as read-only or editable.
+          </DialogDescription>
         </DialogHeader>
         <div className="flex items-center gap-4">
           <label className="flex items-center gap-1">
@@ -83,10 +79,13 @@ export default function ShareDialog({ currentWorkspace }: ShareDialogProps) {
         <textarea
           readOnly
           value={shareUrl}
+          aria-label="Share URL"
           className="w-full h-24 p-2 border rounded"
         />
         <DialogFooter>
-          <DialogClose>Close</DialogClose>
+          <DialogClose asChild>
+            <Button variant="outline">Close</Button>
+          </DialogClose>
           <Button onClick={copyToClipboard}>
             {copied ? (
               <>
