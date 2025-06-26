@@ -1,4 +1,4 @@
-import { Share2 } from 'lucide-react'
+import { Check, CopyIcon, Share2 } from 'lucide-react'
 import React, { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -32,7 +32,8 @@ function utf8ToBase64(str: string): string {
 }
 
 export default function ShareDialog({ currentWorkspace }: ShareDialogProps) {
-  const [mode, setMode] = useState<'ro' | 'edit'>('ro')
+  const [mode, setMode] = useState<'ro' | 'edit'>('edit')
+  const [copied, setCopied] = useState(false)
   const { html, css, js, name } = currentWorkspace
   const json = JSON.stringify({ html, css, js, name })
   const payload = utf8ToBase64(json)
@@ -43,6 +44,8 @@ export default function ShareDialog({ currentWorkspace }: ShareDialogProps) {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shareUrl)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   return (
@@ -83,8 +86,20 @@ export default function ShareDialog({ currentWorkspace }: ShareDialogProps) {
           className="w-full h-24 p-2 border rounded"
         />
         <DialogFooter>
-          <Button onClick={copyToClipboard}>Copy Link</Button>
           <DialogClose>Close</DialogClose>
+          <Button onClick={copyToClipboard}>
+            {copied ? (
+              <>
+                <Check className="h-4 w-4 shrink-0" />
+                <span className="ml-2">Copied!</span>
+              </>
+            ) : (
+              <>
+                <CopyIcon className="h-4 w-4 shrink-0" />
+                <span className="ml-2">Copy Link</span>
+              </>
+            )}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

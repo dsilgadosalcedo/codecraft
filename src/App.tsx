@@ -40,7 +40,14 @@ function App() {
     const mode = params.get('mode')
     if (share) {
       try {
-        const decoded = JSON.parse(atob(decodeURIComponent(share)))
+        // Properly decode UTF-8 encoded base64 share payload (handle Unicode)
+        const base64 = decodeURIComponent(share)
+        const binary = atob(base64)
+        // Convert binary string to percent-encoded UTF-8, then decode
+        const percentEncoded = Array.from(binary)
+          .map(c => `%${c.charCodeAt(0).toString(16).padStart(2, '0')}`)
+          .join('')
+        const decoded = JSON.parse(decodeURIComponent(percentEncoded))
         updateWorkspaceFiles({
           html: decoded.html,
           css: decoded.css,
@@ -50,7 +57,7 @@ function App() {
           currentWorkspaceId,
           decoded.name || currentWorkspace.name
         )
-        setShareReadOnly(mode !== 'edit')
+        setShareReadOnly(mode === 'ro')
       } catch {
         console.error('Invalid share data')
       }
