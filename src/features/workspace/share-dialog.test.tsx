@@ -37,14 +37,16 @@ describe('ShareDialog', () => {
     )
     await user.click(screen.getByRole('button', { name: /Share/i }))
     expect(screen.getByText('Share Workspace')).toBeInTheDocument()
-    const textarea = screen.getByLabelText('Share URL')
-    expect(textarea).toHaveValue(expect.stringContaining('share='))
+    const textarea = screen.getByLabelText('Share URL') as HTMLTextAreaElement
+    expect(textarea.value).toContain('share=')
     expect(textarea).toBeInTheDocument()
   })
 
   it('copies the URL to clipboard and shows confirmation', async () => {
-    const writeTextMock = vi.fn().mockResolvedValue(undefined)
-    Object.assign(navigator, { clipboard: { writeText: writeTextMock } })
+    // Spy on the existing clipboard.writeText method
+    const writeTextMock = vi
+      .spyOn(navigator.clipboard, 'writeText')
+      .mockResolvedValue(undefined)
     const user = userEvent.setup()
     render(
       <SidebarProvider>

@@ -45,4 +45,13 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 })
 
+// Mock ResizeObserver
+Object.defineProperty(window, 'ResizeObserver', {
+  value: class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+})
+
 // Remove Monaco and Emmet mocks to avoid module resolution issues
