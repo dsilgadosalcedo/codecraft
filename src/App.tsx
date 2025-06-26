@@ -21,6 +21,8 @@ function App() {
   const updateWorkspaceFiles = useWorkspaceStore(
     state => state.updateWorkspaceFiles
   )
+  const renameWorkspace = useWorkspaceStore(state => state.renameWorkspace)
+
   const currentWorkspace =
     workspaces.find(w => w.id === currentWorkspaceId) || workspaces[0]
   const html = currentWorkspace?.html ?? initialHtml
@@ -28,6 +30,34 @@ function App() {
   const js = currentWorkspace?.js ?? initialJs
   const [code, setCode] = useState('')
   const [maximized, setMaximized] = useState<string | null>(null)
+  const [shareReadOnly, setShareReadOnly] = useState(false)
+
+  // On mount: check for share data in URL
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const share = params.get('share')
+    const mode = params.get('mode')
+    if (share) {
+      try {
+        const decoded = JSON.parse(atob(decodeURIComponent(share)))
+        updateWorkspaceFiles({
+          html: decoded.html,
+          css: decoded.css,
+          js: decoded.js,
+        })
+        renameWorkspace(
+          currentWorkspaceId,
+          decoded.name || currentWorkspace.name
+        )
+        setShareReadOnly(mode !== 'edit')
+      } catch {
+        console.error('Invalid share data')
+      }
+    }
+  }, [])
+
+  const readOnly = shareReadOnly
 
   const setHtml = (value: string) => updateWorkspaceFiles({ html: value })
   const setCss = (value: string) => updateWorkspaceFiles({ css: value })
@@ -96,6 +126,7 @@ function App() {
                         ? setCss
                         : setJs
                   }
+                  readOnly={readOnly}
                 />
               </Suspense>
             )}
@@ -117,6 +148,7 @@ function App() {
                       language="html"
                       value={html}
                       onChange={setHtml}
+                      readOnly={readOnly}
                     />
                   </Suspense>
                   <Button
@@ -134,6 +166,7 @@ function App() {
                       language="css"
                       value={css}
                       onChange={setCss}
+                      readOnly={readOnly}
                     />
                   </Suspense>
                   <Button
@@ -151,6 +184,7 @@ function App() {
                       language="javascript"
                       value={js}
                       onChange={setJs}
+                      readOnly={readOnly}
                     />
                   </Suspense>
                   <Button

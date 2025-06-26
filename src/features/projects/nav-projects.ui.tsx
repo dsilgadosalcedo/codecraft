@@ -1,6 +1,7 @@
 import { Download, Github, Upload } from 'lucide-react'
 import React from 'react'
 
+import ShareDialog from '@/components/share-dialog'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -64,6 +65,10 @@ export default function NavProjectsUI({
           className="hidden"
           onChange={importZipHandler}
         />
+
+        <SidebarMenuItem>
+          <ShareDialog currentWorkspace={currentWorkspace} />
+        </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
   )

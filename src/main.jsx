@@ -11,6 +11,10 @@ import {
 import App from './App.tsx'
 import './styles.css'
 import reportWebVitals from './reportWebVitals.js'
+import { setupMonacoEnvironment } from '@/utils/monacoSetup'
+
+// Configure Monaco web workers
+setupMonacoEnvironment()
 
 const rootRoute = createRootRoute({
   component: () => (
