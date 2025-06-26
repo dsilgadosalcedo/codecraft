@@ -50,7 +50,7 @@ export default function NavMainUI({
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton tooltip={'Browse Workspaces'}>
                   <FolderOpen />
-                  <span>Browse Workspaces</span>
+                  <span className="truncate">Browse Workspaces</span>
                   <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                 </SidebarMenuButton>
               </CollapsibleTrigger>
