@@ -1,5 +1,12 @@
 import { Maximize2, Minimize2 } from 'lucide-react'
-import React, { lazy, Suspense, useEffect, useState } from 'react'
+import React, {
+  lazy,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import Split from 'react-split-grid'
 
 import { AppSidebar } from '@/components/app-sidebar'
@@ -28,13 +35,14 @@ function App() {
   const html = currentWorkspace?.html ?? initialHtml
   const css = currentWorkspace?.css ?? initialCss
   const js = currentWorkspace?.js ?? initialJs
-  const [code, setCode] = useState('')
   const [maximized, setMaximized] = useState<string | null>(null)
   const [shareReadOnly, setShareReadOnly] = useState(false)
 
   // On mount: check for share data in URL
-
+  const hasInitializedShareRef = useRef(false)
   useEffect(() => {
+    if (hasInitializedShareRef.current) return
+    hasInitializedShareRef.current = true
     const params = new URLSearchParams(window.location.search)
     const share = params.get('share')
     const mode = params.get('mode')
@@ -57,12 +65,18 @@ function App() {
           currentWorkspaceId,
           decoded.name || currentWorkspace.name
         )
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setShareReadOnly(mode === 'ro')
       } catch {
         console.error('Invalid share data')
       }
     }
-  }, [])
+  }, [
+    currentWorkspaceId,
+    currentWorkspace.name,
+    renameWorkspace,
+    updateWorkspaceFiles,
+  ])
 
   const readOnly = shareReadOnly
 
@@ -70,7 +84,7 @@ function App() {
   const setCss = (value: string) => updateWorkspaceFiles({ css: value })
   const setJs = (value: string) => updateWorkspaceFiles({ js: value })
 
-  useEffect(() => {
+  const code = useMemo(() => {
     // Extract any <head> and <body> content from the template HTML
     const raw = html || ''
     const headMatch = raw.match(/<head[^>]*>([\s\S]*?)<\/head>/i)
@@ -79,7 +93,7 @@ function App() {
     const injectedBody = bodyMatch ? bodyMatch[1] : raw
 
     // Build the final document, preserving template head tags (e.g., CDNs)
-    const full = `<!DOCTYPE html>
+    return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -92,7 +106,6 @@ function App() {
   <script defer>${js}</script>
 </body>
 </html>`
-    setCode(full)
   }, [html, css, js])
 
   return (

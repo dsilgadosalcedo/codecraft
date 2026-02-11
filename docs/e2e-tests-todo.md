@@ -54,7 +54,7 @@ This file outlines all the Cypress end-to-end test flows we plan to implement fo
 
 ## Cross-Browser & CI
 
-- [ ] Configure CI to run `pnpm cypress:run` across Chrome, Firefox, and Edge
+- [ ] Configure CI to run `bun run cypress:run` across Chrome, Firefox, and Edge
 - [ ] Integrate test artifacts (screenshots, videos) into CI reports
 
 ---

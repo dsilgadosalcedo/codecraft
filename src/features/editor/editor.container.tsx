@@ -60,12 +60,16 @@ export default function EditorContainer({
       editorRef.current = editor
     }
     // Enable JS/TS diagnostics for in-editor linting
-    monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+    ;(
+      monaco.languages.typescript as any
+    ).javascriptDefaults.setDiagnosticsOptions({
       noSemanticValidation: false,
       noSyntaxValidation: false,
       noSuggestionDiagnostics: false,
     })
-    monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+    ;(
+      monaco.languages.typescript as any
+    ).typescriptDefaults.setDiagnosticsOptions({
       noSemanticValidation: false,
       noSyntaxValidation: false,
       noSuggestionDiagnostics: false,

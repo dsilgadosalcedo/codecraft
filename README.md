@@ -1,12 +1,12 @@
 Welcome to your new TanStack app!
 
-# Getting Started
+## Getting Started
 
 To get up and running (this will also install and configure Husky hooks):
 
 ```bash
-pnpm install
-pnpm start
+bun install
+bun run start
 ```
 
 To bypass Git hooks (e.g. in emergencies):
@@ -15,12 +15,12 @@ To bypass Git hooks (e.g. in emergencies):
 git commit --no-verify
 ```
 
-# Building For Production
+## Building For Production
 
 To build this application for production:
 
 ```bash
-npm run build
+bun run build
 ```
 
 ## Testing
@@ -28,7 +28,7 @@ npm run build
 This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
 
 ```bash
-npm run test
+bun run test:run
 ```
 
 ## Styling

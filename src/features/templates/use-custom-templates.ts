@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { useWorkspaceStore } from '@/store/useWorkspaceStore'
 import type { Template, UseCustomTemplatesResult } from '@/types'
 
 export function useCustomTemplates(): UseCustomTemplatesResult {
-  const [customTemplates, setCustomTemplates] = useState<Template[]>([])
-
-  useEffect(() => {
-    const stored = localStorage.getItem('customTemplates')
-    if (stored) {
-      try {
-        setCustomTemplates(JSON.parse(stored))
-      } catch {
-        setCustomTemplates([])
-      }
+  const [customTemplates, setCustomTemplates] = useState<Template[]>(() => {
+    if (typeof window === 'undefined') return []
+    const stored = window.localStorage.getItem('customTemplates')
+    if (!stored) return []
+    try {
+      return JSON.parse(stored) as Template[]
+    } catch {
+      return []
     }
-  }, [])
+  })
 
   const saveCustomTemplate = () => {
     const name = prompt('Template name:')

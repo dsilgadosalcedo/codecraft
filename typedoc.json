@@ -1,5 +1,6 @@
 {
   "entryPoints": ["src"],
+  "entryPointStrategy": "expand",
   "out": "docs/api",
   "exclude": ["**/*.test.ts", "**/*.test.tsx", "node_modules", "dist"],
   "excludePrivate": true,
